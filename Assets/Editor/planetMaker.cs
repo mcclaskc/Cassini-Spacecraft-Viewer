@@ -39,9 +39,9 @@ public class planetMaker : EditorWindow {
 	
 	void createPlanet() {
 		GameObject planet =  GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		planet.name = name;
+		planet.name = planetName;
 		Material tex = new Material(Shader.Find("Diffuse"));
-		AssetDatabase.CreateAsset(tex, "Assets/" + name + ".mat");
+		AssetDatabase.CreateAsset(tex, "Assets/" + planetName + ".mat");
 		tex.mainTexture = bodyTexture;
 		planet.renderer.material = tex;
 		planet.transform.localScale = new Vector3(radius,radius * (1.0f - flattening),radius);
