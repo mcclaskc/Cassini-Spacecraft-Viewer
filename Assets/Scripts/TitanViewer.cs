@@ -3,20 +3,18 @@ using System.Collections;
 
 public class TitanViewer : MonoBehaviour {
 	
-	public int tdata = 12345;
+	public int l1data = 12345;
+	public int l2data = 54321;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () {	
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () {	
 	}
-	void OnGui(){
-		GUI.Box (new Rect (0,0,100,50), "Titan Data");
-		GUI.Label(new Rect(0,0,256,256), "Titan UVIS: " + tdata);
-		Debug.Log("In OnGui()");
+	void OnGUI(){
+		GUI.Label(new Rect(Screen.width*0.3f,Screen.height*0.7f,
+			Screen.width*0.7f,Screen.height*0.3f), "Titan UVIS\nL1: " + l1data + "\nL2: " + l2data);
 	}
 }
