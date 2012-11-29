@@ -1,10 +1,12 @@
 using UnityEngine;
-    using System.Collections;
+using System.Collections;
 
     public class MouseOrbit : MonoBehaviour 
     {
         public Transform target;
         public float distance = 10.0f;
+		public float distanceMin;
+		public float distanceMax;
 
         public float xSpeed = 250.0f;
         public float ySpeed = 120.0f;
@@ -29,6 +31,10 @@ using UnityEngine;
 			{
 				transform.rotation = Quaternion.Euler(y, x, 0);
                 transform.position = (Quaternion.Euler(y, x, 0)) * new Vector3(0.0f, 0.0f, -distance) + target.position;
+				distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel"), distanceMin, distanceMax);	
+			
+				//Debug.Log (Input.GetAxis ("Mouse ScrollWheel"));
+			
 			}
             if (target && Input.GetMouseButton(0))
             {
@@ -36,6 +42,8 @@ using UnityEngine;
                 y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 
                 y = ClampAngle(y, yMinLimit, yMaxLimit);
+			
+				
 
             }
         }
