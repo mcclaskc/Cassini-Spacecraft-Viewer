@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: c564b8faa6bee074199ad2d6d777eece
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: ___DUMMY_cassini_16
+    100002: _AMBIENT_
+    100004: cassini_10
+    100006: cassini_11
+    100008: cassini_13
+    100010: cassini_14
+    100012: cassini_15
+    100014: cassini_a1
+    100016: cassini_a2
+    100018: cassini_a4
+    100020: cassini_a5
+    100022: cassini_a6
+    100024: cassini_a7
+    100026: cassini_a8
+    100028: cassini_as
+    100030: //RootNode
+    400000: ___DUMMY_cassini_16
+    400002: _AMBIENT_
+    400004: cassini_10
+    400006: cassini_11
+    400008: cassini_13
+    400010: cassini_14
+    400012: cassini_15
+    400014: cassini_a1
+    400016: cassini_a2
+    400018: cassini_a4
+    400020: cassini_a5
+    400022: cassini_a6
+    400024: cassini_a7
+    400026: cassini_a8
+    400028: cassini_as
+    400030: //RootNode
+    2300000: cassini_10
+    2300002: cassini_11
+    2300004: cassini_13
+    2300006: cassini_14
+    2300008: cassini_15
+    2300010: cassini_a1
+    2300012: cassini_a2
+    2300014: cassini_a4
+    2300016: cassini_a5
+    2300018: cassini_a6
+    2300020: cassini_a7
+    2300022: cassini_a8
+    2300024: cassini_as
+    3300000: cassini_10
+    3300002: cassini_11
+    3300004: cassini_13
+    3300006: cassini_14
+    3300008: cassini_15
+    3300010: cassini_a1
+    3300012: cassini_a2
+    3300014: cassini_a4
+    3300016: cassini_a5
+    3300018: cassini_a6
+    3300020: cassini_a7
+    3300022: cassini_a8
+    3300024: cassini_as
+    4300000: cassini_as
+    4300002: cassini_a1
+    4300004: cassini_a2
+    4300006: cassini_a4
+    4300008: cassini_a5
+    4300010: cassini_a6
+    4300012: cassini_a7
+    4300014: cassini_a8
+    4300016: cassini_10
+    4300018: cassini_11
+    4300020: cassini_13
+    4300022: cassini_14
+    4300024: cassini_15
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 
