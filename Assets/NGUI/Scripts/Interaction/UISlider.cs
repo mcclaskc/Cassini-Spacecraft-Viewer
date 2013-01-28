@@ -65,7 +65,7 @@ public class UISlider : IgnoreTimeScale
 	/// Number of steps the slider should be divided into. For example 5 means possible values of 0, 0.25, 0.5, 0.75, and 1.0.
 	/// </summary>
 
-	public int numberOfSteps = 0;
+	public int numberOfSteps = 21;
 
 	// Used to be public prior to 1.87
 	[HideInInspector][SerializeField] float rawValue = 1f;

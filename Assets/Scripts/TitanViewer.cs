@@ -14,7 +14,7 @@ public class TitanViewer : MonoBehaviour {
 	void Update () {	
 	}
 	void OnGUI(){
-		GUI.Label(new Rect(Screen.width*0.3f,Screen.height*0.7f,
-			Screen.width*0.7f,Screen.height*0.3f), "Titan UVIS\nL1: " + l1data + "\nL2: " + l2data);
+		GUI.Label(new Rect(Screen.width*0.3f,0.0f,
+			Screen.width*0.7f,Screen.height*.3f), "Titan UVIS\nL1: " + l1data + "\nL2: " + l2data);
 	}
 }
