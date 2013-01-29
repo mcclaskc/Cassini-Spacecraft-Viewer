@@ -17,7 +17,7 @@ public class ObjectLabel : MonoBehaviour {
  
 	void Start () 
     {
-		Debug.Log ("On Start Called");
+		//This assumes that the GameObject that is the root parent has the name you wish to display and follow
 		//Set the camera
 	    thisTransform = transform;
 	    if (useMainCamera)
@@ -33,13 +33,24 @@ public class ObjectLabel : MonoBehaviour {
 		target = transform.root;
 		//Set the object Label Name
 		guitext.text = transform.root.name;
-		Debug.Log (transform.root.name + " IS THE ROOT NAME");
+		//Debug.Log (transform.root.name + " IS THE ROOT NAME");
 	}
  
  
     void Update()
     {
- 
+		if(!transform.root.renderer.IsVisibleFrom (Camera.main))
+		{
+			guitext.text = "";
+		}
+		else
+		{
+			guitext.text = transform.root.name;
+		}
+			
+ 		
+		//Not researched yet, mirror bug fix renders this useless
+		/*
         if (clampToScreen)
         {
             Vector3 relativePosition = camTransform.InverseTransformPoint(target.position);
@@ -50,9 +61,9 @@ public class ObjectLabel : MonoBehaviour {
                                              thisTransform.position.z);
  
         }
-        else
-        {
-            thisTransform.position = cam.WorldToViewportPoint(target.position + offset);
-        }
+        */
+       
+        thisTransform.position = cam.WorldToViewportPoint(target.position + offset);
+        
     }
 }
