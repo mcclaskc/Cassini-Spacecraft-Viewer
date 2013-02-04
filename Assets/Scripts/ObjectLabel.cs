@@ -3,6 +3,7 @@ using System.Collections;
  
 [RequireComponent (typeof (GUIText))]
 public class ObjectLabel : MonoBehaviour {
+	//Script modified from original found at http://wiki.unity3d.com/index.php?title=ObjectLabel
  
 	public Transform target;  // Object that this label should follow
 	public Vector3 offset = Vector3.up;    // Units in world space to offset; 1 unit above object by default
