@@ -37,14 +37,14 @@ public class windowManagerScript : MonoBehaviour {
 					Camera.main.depth = 1;
 					viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 					viewerCamera.depth = -1;
-					pipMain = !pipMain;
+					pipIsNotMain = !pipIsNotMain;
 					lastPipSwitch = Time.time;
 				} else {
 					Camera.main.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 					Camera.main.depth = -1;
 					viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 					viewerCamera.depth = 1;
-					pipMain = !pipMain;
+					pipIsNotMain = !pipIsNotMain;
 					lastPipSwitch = Time.time;
 				}
 				Debug.Log("User clicked in the PiP");
