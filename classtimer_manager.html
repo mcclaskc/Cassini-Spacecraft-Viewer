@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Cassini Spacecraft Viewer: Main Page</title>
+<title>Cassini Spacecraft Viewer: timerManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -43,8 +43,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -64,6 +64,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -76,7 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('index.html','');});
+$(document).ready(function(){initNavTree('classtimer_manager.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -94,16 +102,56 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classtimer_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Cassini Spacecraft Viewer Documentation</div>  </div>
+<div class="title">timerManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for timerManager:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classtimer_manager.png" usemap="#timerManager_map" alt=""/>
+  <map id="timerManager_map" name="timerManager_map">
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ac1fc664d7374d03723df5a9a643705e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1fc664d7374d03723df5a9a643705e6"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>currTimeStep</b></td></tr>
+<tr class="separator:ac1fc664d7374d03723df5a9a643705e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedbce6d64770bbb62e576316cfec7340"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedbce6d64770bbb62e576316cfec7340"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultTimeStep</b></td></tr>
+<tr class="separator:aedbce6d64770bbb62e576316cfec7340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafe5e20cba80d5696bc0b34aca6ee106"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafe5e20cba80d5696bc0b34aca6ee106"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>minTime</b></td></tr>
+<tr class="separator:aafe5e20cba80d5696bc0b34aca6ee106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96168606a56d762c82c7f28b5017fdc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae96168606a56d762c82c7f28b5017fdc"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>maxTime</b></td></tr>
+<tr class="separator:ae96168606a56d762c82c7f28b5017fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c1c07930f76e26fd085e86d3507aaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37c1c07930f76e26fd085e86d3507aaa"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>currTime</b></td></tr>
+<tr class="separator:a37c1c07930f76e26fd085e86d3507aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34054018baf6948fdf0a77e856a6e812"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34054018baf6948fdf0a77e856a6e812"></a>
+<a class="el" href="class_u_i_slider.html">UISlider</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timeBar</b></td></tr>
+<tr class="separator:a34054018baf6948fdf0a77e856a6e812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="timer_manager_8cs_source.html#l00004">4</a> of file <a class="el" href="timer_manager_8cs_source.html">timerManager.cs</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>E:/Documents/GitHub/Cassini-Spacecraft-Viewer/Assets/Scripts/<a class="el" href="timer_manager_8cs_source.html">timerManager.cs</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Feb 5 2013 11:16:46 for Cassini Spacecraft Viewer by
+    <li class="navelem"><a class="el" href="classtimer_manager.html">timerManager</a></li>
+    <li class="footer">Generated on Tue Feb 5 2013 11:16:45 for Cassini Spacecraft Viewer by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
