@@ -6,6 +6,7 @@ public class windowManagerScript : MonoBehaviour {
 	public UIPopupList planetList;
 	public UIPopupList sensorList;
 	public GameObject currentViewer;
+	public GameObject cassiniViewer;
 	private Camera viewerCamera;
 	
 	private bool pipMain = false;  //False if pip is NOT main screen
@@ -47,6 +48,13 @@ public class windowManagerScript : MonoBehaviour {
 					lastPipSwitch = Time.time;
 				}
 				Debug.Log("User clicked in the PiP");
+				
+			//If the user clicks within the center area of the screen (i.e. where Cassini will always be) then the cassini viewer is either enabled or disabled
+			} else if ((Input.mousePosition.x < .55f * Screen.width) && (Input.mousePosition.x > .45f * Screen.width)
+							&& (Input.mousePosition.y < .55f * Screen.height) && (Input.mousePosition.y > .45f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
+				cassiniViewer.GetComponent<Camera>().enabled = !cassiniViewer.GetComponent<Camera>().enabled;
+				lastPipSwitch = Time.time;	
+				Debug.Log("User clicked on Cassini");				
 			} else {
 			
 				//Translate current mouse position to a ray
@@ -54,6 +62,7 @@ public class windowManagerScript : MonoBehaviour {
 				//Use that ray to determine if the user was clicking on a body of interest
 				if(Physics.Raycast(mouseRay, out hitObj, 1000f)){
 					GameObject hitBody = hitObj.transform.gameObject;
+					
 					//Check if we hit something with a viewer attached
 					if(GameObject.Find(hitBody.name + "Viewer") != null){	
 						//If we did, then change the current picture in picture to that object
