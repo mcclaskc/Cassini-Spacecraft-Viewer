@@ -22,7 +22,7 @@ public class windowManagerScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update() {
 		
 		RaycastHit hitObj;		//Holder for any objects hit by a ray
 		
