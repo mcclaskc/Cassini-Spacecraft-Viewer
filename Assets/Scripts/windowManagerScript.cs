@@ -34,7 +34,7 @@ public class windowManagerScript : MonoBehaviour {
 			if((Input.mousePosition.x < .3f * Screen.width) && (Input.mousePosition.y > .7f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
 				if(!pipMain){
 					Camera.main.pixelRect = new Rect(0f,.7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
-					Camera.main.depth = 0;
+					Camera.main.depth = 1;
 					viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 					viewerCamera.depth = -1;
 					pipMain = !pipMain;
@@ -43,15 +43,15 @@ public class windowManagerScript : MonoBehaviour {
 					Camera.main.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 					Camera.main.depth = -1;
 					viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
-					viewerCamera.depth = 0;
+					viewerCamera.depth = 1;
 					pipMain = !pipMain;
 					lastPipSwitch = Time.time;
 				}
 				Debug.Log("User clicked in the PiP");
 				
 			//If the user clicks within the center area of the screen (i.e. where Cassini will always be) then the cassini viewer is either enabled or disabled
-			} else if ((Input.mousePosition.x < .55f * Screen.width) && (Input.mousePosition.x > .45f * Screen.width)
-							&& (Input.mousePosition.y < .55f * Screen.height) && (Input.mousePosition.y > .45f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
+			} else if ((Input.mousePosition.x < .52f * Screen.width) && (Input.mousePosition.x > .48f * Screen.width)
+							&& (Input.mousePosition.y < .52f * Screen.height) && (Input.mousePosition.y > .48f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
 				cassiniViewer.GetComponent<Camera>().enabled = !cassiniViewer.GetComponent<Camera>().enabled;
 				lastPipSwitch = Time.time;	
 				Debug.Log("User clicked on Cassini");				
