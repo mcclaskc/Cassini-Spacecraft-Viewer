@@ -9,7 +9,7 @@ public class windowManagerScript : MonoBehaviour {
 	public GameObject cassiniViewer;
 	private Camera viewerCamera;
 	
-	private bool pipMain = false;  //False if pip is NOT main screen
+	private bool pipIsNotMain = false;  //False if pip is NOT main screen
 	private float lastPipSwitch;
 	
 	// Use this for initialization
@@ -32,7 +32,7 @@ public class windowManagerScript : MonoBehaviour {
 			
 			//If the user clicked within the PiP and it has been more that .3 seconds since the last time, switch the two cameras
 			if((Input.mousePosition.x < .3f * Screen.width) && (Input.mousePosition.y > .7f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
-				if(!pipMain){
+				if(!pipIsNotMain){
 					Camera.main.pixelRect = new Rect(0f,.7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 					Camera.main.depth = 1;
 					viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
@@ -79,11 +79,25 @@ public class windowManagerScript : MonoBehaviour {
 	
 	//This function will be called when a different planet is selected through the drop-down by the user
 	void OnPlanetSelectionChange(){
-		viewerCamera.enabled = false;
-		currentViewer = GameObject.Find(planetList.selection + "Viewer");
-		viewerCamera = currentViewer.GetComponent<Camera>();
-		viewerCamera.enabled = true;
-		Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
+		if(!pipIsNotMain){
+			viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
+			viewerCamera.enabled = false;
+			currentViewer = GameObject.Find(planetList.selection + "Viewer");
+			viewerCamera = currentViewer.GetComponent<Camera>();
+			viewerCamera.enabled = true;
+			viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
+			viewerCamera.depth = 1;
+			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
+		} else {
+			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
+			viewerCamera.enabled = false;
+			currentViewer = GameObject.Find(planetList.selection + "Viewer");
+			viewerCamera = currentViewer.GetComponent<Camera>();
+			viewerCamera.enabled = true;
+			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
+			viewerCamera.depth = -1;
+			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
+		}
 	}
 	
 	//This function will be called when a different sensor is requested by the user
