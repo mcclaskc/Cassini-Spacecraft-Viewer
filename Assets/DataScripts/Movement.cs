@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour {
 
 	public FileLoader fileloader;
 	private Vector3 target;
-	private float updateRate = 0.01f;
+	private float updateRate = 1.0f;
 	private float nextUpdate = 0.0f;
 	private bool play = false;
 	private int iterator;

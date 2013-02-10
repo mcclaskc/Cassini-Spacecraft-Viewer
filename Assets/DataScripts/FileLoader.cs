@@ -50,8 +50,8 @@ public class FileLoader : MonoBehaviour, DataAccess {
 			while(! finished) {
 				try{
 					double x = binReader.ReadDouble();
-					double y = binReader.ReadDouble();
 					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
 				} catch (Exception e) {
 					finished = true;
