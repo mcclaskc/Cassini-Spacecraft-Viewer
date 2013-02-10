@@ -11,16 +11,27 @@ public class timerManager : MonoBehaviour {
 	public float currTime;					//The current time
 	
 	public UISlider timeBar;				//Time bar to send updates to when time changes
+	
+	private GameObject[] mobileBodies;
 
 
 	// Use this for initialization
 	void Start () {
 	
+		mobileBodies = GameObject.FindGameObjectsWithTag("Mobile");
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
+		if(Input.GetKeyUp(KeyCode.E)){
+			
+			foreach (GameObject mover in mobileBodies){
+			mover.SendMessage ("Play");
+		}
+			
+		}
 	}
 	
 	//This function is called by the NGUIEventPasser when the play button is clicked.

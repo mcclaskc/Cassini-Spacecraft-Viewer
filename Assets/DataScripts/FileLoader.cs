@@ -7,8 +7,10 @@ public class FileLoader : MonoBehaviour, DataAccess {
 
 	//This is an active loader, and just loads up all the files at the beginning
 	Dictionary<string, SortedList<DateTime, EphemerisData>> bodies = new Dictionary<string, SortedList<DateTime, EphemerisData>>();
-
+	GameObject[] Movers;
 	public void Start() {
+		//Finds all gameobjects tagged 'Mover'
+		Movers = GameObject.FindGameObjectsWithTag("Mobile");
 		//Load up the time data
 		List<DateTime> times = new List<DateTime>();
 		string filename = "Assets/Data/timeData.dat";
@@ -25,16 +27,19 @@ public class FileLoader : MonoBehaviour, DataAccess {
 						utc += utcChar[index];
 					}
 					double ephemTime = binReader.ReadDouble();
+					//Debug.Log (DateTime.Parse(utc));
 					times.Add(DateTime.Parse(utc));
 
 				} catch (Exception e) {
 					finished = true;
 				}
 			}
+			
 			binReader.Close();
 		}
 
 		//Now load up the ephemera data
+		//Titan
 		filename = "Assets/Data/titanEphem_saturn.dat";
 		if(File.Exists(filename)) {
 			List<Vector3> posList = new List<Vector3>();
@@ -60,6 +65,9 @@ public class FileLoader : MonoBehaviour, DataAccess {
 			}
 
 			bodies["titan"] = titanData;
+		}
+		foreach (GameObject mover in Movers){
+			mover.SendMessage ("Loaded");
 		}
 	}
 
@@ -91,6 +99,7 @@ public class FileLoader : MonoBehaviour, DataAccess {
 
 	public List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string bodyName) {
 		List<EphemerisData> accumulator = new List<EphemerisData>();
+		Debug.Log(bodies.ContainsKey(bodyName));
 		if(bodies.ContainsKey(bodyName)) {
 			SortedList<DateTime, EphemerisData> bodyData = bodies[bodyName];
 			//Go through and get the data
@@ -100,8 +109,10 @@ public class FileLoader : MonoBehaviour, DataAccess {
 				}
 			}
 		}
+		Debug.Log (accumulator.Count);
 
 		return accumulator;
 	}
+	
 	//------------------------------
 }
