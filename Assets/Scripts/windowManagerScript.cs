@@ -70,6 +70,13 @@ public class windowManagerScript : MonoBehaviour {
 						currentViewer = GameObject.Find(hitBody.name + "Viewer");
 						viewerCamera = currentViewer.GetComponent<Camera>();
 						viewerCamera.enabled = true;
+						if(!pipIsNotMain){
+							viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
+							viewerCamera.depth = 1;
+						} else {
+							viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
+							viewerCamera.depth = -1;
+						}
 						Debug.Log("Hit " + hitObj.transform.gameObject.name);	
 					}
 				}
