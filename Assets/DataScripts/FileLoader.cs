@@ -66,6 +66,9 @@ public class FileLoader : MonoBehaviour, DataAccess {
 
 			bodies["titan"] = titanData;
 		}
+//--------------------------------------------------------------------------------------------------
+		
+		
 		foreach (GameObject mover in Movers){
 			mover.SendMessage ("Loaded");
 		}

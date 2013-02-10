@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour {
 	void Loaded(){
 		
 		DateTime Start = new DateTime(2009,6,22,12, 0,0);
-		DateTime End = new DateTime(2009,6,22,13,0,0);
+		DateTime End = new DateTime(2009,6,22,15,0,0);
 		Debug.Log (Start);
 		Debug.Log (End);
 		Data = fileloader.GetEphemeris(Start, End, "titan");

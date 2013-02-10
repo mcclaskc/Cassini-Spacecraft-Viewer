@@ -71,17 +71,12 @@ public class loadData : MonoBehaviour {
 			for (t_index = 0; t_index < numTimesteps; t_index++)
 			{
 				xPos = binReader.ReadDouble();
-				//Debug.Log( xPos );
 				yPos = binReader.ReadDouble();
-				//Debug.Log( yPos );
 				zPos = binReader.ReadDouble();
-				//Debug.Log( zPos );
 				delX = binReader.ReadDouble();
-				//Debug.Log( delX );
 				delY = binReader.ReadDouble();
-				//Debug.Log( delY );
 				delZ = binReader.ReadDouble();
-				//Debug.Log( delZ );
+				
 				cassiniPos[ 0, t_index ] = xPos;
 				cassiniPos[ 1, t_index ] = yPos;
 				cassiniPos[ 2, t_index ] = zPos;	
