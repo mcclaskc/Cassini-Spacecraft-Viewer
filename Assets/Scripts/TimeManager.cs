@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class timerManager : MonoBehaviour {
+public class TimeManager : MonoBehaviour {
 	
 	public float currTimeStep;				//Current time step with any modifiers (i.e. pause)
 	public float defaultTimeStep;			//Default base time step before any modifiers are added
