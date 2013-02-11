@@ -2,6 +2,7 @@ var searchData=
 [
   ['dataaccess',['DataAccess',['../interface_data_access.html',1,'']]],
   ['datachunk',['DataChunk',['../interface_data_chunk.html',1,'']]],
+  ['datareader',['DataReader',['../class_data_reader.html',1,'']]],
   ['defaultcolor',['defaultColor',['../class_u_i_button_color.html#a55a05e249511c48c2f672242157d55fb',1,'UIButtonColor']]],
   ['direction',['direction',['../class_u_i_scroll_bar.html#a88b4d1364d34cfc037bdc79ff8786668',1,'UIScrollBar.direction()'],['../class_u_i_slider.html#a068f251ec7223cc5ae9bf9deae7f7928',1,'UISlider.direction()'],['../class_u_i_tweener.html#aba396337c18b6349eacbf484940d1658',1,'UITweener.direction()']]],
   ['disabledragiffits',['disableDragIfFits',['../class_u_i_draggable_panel.html#a7d071d4691aa0d18c0f579cac4a632eb',1,'UIDraggablePanel']]],
