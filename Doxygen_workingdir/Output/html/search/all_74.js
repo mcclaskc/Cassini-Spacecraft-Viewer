@@ -6,7 +6,7 @@ var searchData=
   ['textscale',['textScale',['../class_u_i_popup_list.html#ac7aa1fb7552f69ae811675e2de0db3e9',1,'UIPopupList']]],
   ['texturepreview',['texturePreview',['../class_u_i_settings.html#a5aeedc8159bd9bad07176a8eb65c6a36',1,'UISettings']]],
   ['thumb',['thumb',['../class_u_i_slider.html#a606f21721c5547c151c37ab4a73e3ca4',1,'UISlider']]],
-  ['timermanager',['timerManager',['../classtimer_manager.html',1,'']]],
+  ['timemanager',['TimeManager',['../class_time_manager.html',1,'']]],
   ['titanviewer',['TitanViewer',['../class_titan_viewer.html',1,'']]],
   ['toggle',['Toggle',['../class_u_i_tweener.html#adfa96ed8007042236f4fa79a2d7b8be8',1,'UITweener']]],
   ['trigger',['trigger',['../class_u_i_button_play_animation.html#afab5ccc118bedf11e12b7a5635f91a21',1,'UIButtonPlayAnimation.trigger()'],['../class_u_i_button_tween.html#a61edf58756da9513e60de15607bd9a27',1,'UIButtonTween.trigger()']]],

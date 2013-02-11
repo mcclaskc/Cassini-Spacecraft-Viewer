@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['timermanager',['timerManager',['../classtimer_manager.html',1,'']]],
+  ['timemanager',['TimeManager',['../class_time_manager.html',1,'']]],
   ['titanviewer',['TitanViewer',['../class_titan_viewer.html',1,'']]],
   ['tweencolor',['TweenColor',['../class_tween_color.html',1,'']]],
   ['tweenposition',['TweenPosition',['../class_tween_position.html',1,'']]],
