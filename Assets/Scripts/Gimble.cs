@@ -20,6 +20,7 @@ using System.Collections;
 
         void Start () 
         {
+			//Set our initial angles
             var angles = transform.eulerAngles;
             x = angles.y;
             y = angles.x;
