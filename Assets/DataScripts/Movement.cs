@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		Debug.Log (transform.name);
 		iterator = 0;
 	
 	}
@@ -39,11 +40,14 @@ public class Movement : MonoBehaviour {
 		DateTime End = new DateTime(2009,6,22,15,0,0);
 		Debug.Log (Start);
 		Debug.Log (End);
-		Data = fileloader.GetEphemeris(Start, End, "titan");
+		Debug.Log (transform.name);
+		Data = fileloader.GetEphemeris(Start, End, transform.name);
 		
 		for(int i = 0; i < Data.Count; i++)
 		{
+			
 			Debug.Log (Data[i].position + "  " + Data[i].time);
+			
 		}
 		transform.position = Data[0].position;
 		target = Data[0].position;

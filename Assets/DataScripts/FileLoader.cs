@@ -64,11 +64,49 @@ public class FileLoader : MonoBehaviour, DataAccess {
 				titanData.Add(times[i], new EphemerisData(posList[i], times[i]));
 			}
 
-			bodies["titan"] = titanData;
+			bodies["Titan"] = titanData;
 		}
 //--------------------------------------------------------------------------------------------------
+		//Cassini
+		//File where binary data exists
+		filename = "Assets/Data/cassiniEphem_saturn.dat";
+		if(File.Exists (filename)){
+			//List to store the positions read from file
+			List<Vector3> posList = new List<Vector3>();
+			//Sanity check
+			Debug.Log ("Loading Cassini ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open (filename, FileMode.Open));
+			bool finished = false;
+			//These are placeholders, cassini file comes with velocity data as well as position
+			double velx, vely, velz;
+			//Loop that goes until file is loaded
+			while(!finished) {
+				try{
+					//positions
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					//velocities
+					velx = binReader.ReadDouble();
+					velz = binReader.ReadDouble();
+					vely = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float) y, (float)z));
+					
+				}catch(Exception e){
+				  	finished = true;
+				}
+			}
+			//Matching up times
+			SortedList<DateTime, EphemerisData> cassiniData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				cassiniData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			//Add the cassini data to the dictionary
+			bodies["Cassini_Temp"] = cassiniData;
+		}
 		
 		
+		//Let gameobject know they can now receive their data
 		foreach (GameObject mover in Movers){
 			mover.SendMessage ("Loaded");
 		}
