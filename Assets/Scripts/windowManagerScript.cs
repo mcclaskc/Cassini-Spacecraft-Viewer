@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 /*
- * This script manages the various windows.  It must have a linked
+ * This script manages the various windows.  It expects to have a direct link to a viewer for Cassini,
+ * as well as a general purpose viewer.
  */
 
 public class windowManagerScript : MonoBehaviour {
@@ -15,25 +16,22 @@ public class windowManagerScript : MonoBehaviour {
 	private VectorFollow viewerScript;
 	
 	private bool pipIsNotMain = false;  //False if pip is NOT main screen
-	private float lastPipSwitch;
+	private float lastPipSwitch;		//Use to keep track of when the user last did something
 	
-	// Use this for initialization
+	//Initialize the PiP camera here
 	void Start () {
-		//Initialize the PiP camera
-		//currentViewer = GameObject.Find(planetList.selection+"Viewer");
-		//viewerCamera = currentViewer.GetComponent<Camera>();
-
-
 		//Grab the viewerScript once since it should not change
 		viewerScript = currentViewer.GetComponent<VectorFollow>();
 		//Grab the viewer camera so we don't have to do it again
 		viewerCamera = currentViewer.GetComponent<Camera>();
+		//Make sure the camera is displaying to the screen
 		viewerCamera.enabled = true;
+		//Update it with the default selection
 		currentViewer.SendMessage("SetTarget", planetList.selection);
 		Debug.Log(viewerCamera);
 	}
 	
-	// Update is called once per frame
+	// Update is called once per frame, use to update positions
 	void Update() {
 		
 		RaycastHit hitObj;		//Holder for any objects hit by a ray
@@ -45,6 +43,7 @@ public class windowManagerScript : MonoBehaviour {
 			//If the user clicked within the PiP and it has been more that .3 seconds since the last time, switch the two cameras
 			if((Input.mousePosition.x < .3f * Screen.width) && (Input.mousePosition.y > .7f * Screen.height) && (Time.time - lastPipSwitch > .3f)){
 				if(!pipIsNotMain){
+					//Swap depth and screen display coordinates of the PiP and main cameras
 					Camera.main.pixelRect = new Rect(0f,.7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 					Camera.main.depth = 1;
 					viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
@@ -52,6 +51,7 @@ public class windowManagerScript : MonoBehaviour {
 					pipIsNotMain = !pipIsNotMain;
 					lastPipSwitch = Time.time;
 				} else {
+					//Swap depth and screen display coordinates of the PiP and main cameras
 					Camera.main.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 					Camera.main.depth = -1;
 					viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
@@ -78,15 +78,13 @@ public class windowManagerScript : MonoBehaviour {
 					//Check if we hit something with a viewer attached
 					if(GameObject.Find(hitBody.name + "Viewer") != null){	
 						//If we did, then change the current picture in picture to that object
-						//viewerCamera.enabled = false;
-						//currentViewer = GameObject.Find(hitBody.name + "Viewer");
 						currentViewer.SendMessage("SetTarget", hitBody.name);
-						//viewerCamera = currentViewer.GetComponent<Camera>();
-						//viewerCamera.enabled = true;
 						if(!pipIsNotMain){
+							//Sanity check to make sure camera is where we expect it to be
 							viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 							viewerCamera.depth = 1;
 						} else {
+							//Sanity check to make sure camera is where we expect it to be
 							viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 							viewerCamera.depth = -1;
 						}
@@ -100,22 +98,16 @@ public class windowManagerScript : MonoBehaviour {
 	//This function will be called when a different planet is selected through the drop-down by the user
 	void OnPlanetSelectionChange(){
 		if(!pipIsNotMain){
-			//viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
-			//viewerCamera.enabled = false;
-			//currentViewer = GameObject.Find(planetList.selection + "Viewer");
-			//viewerCamera = currentViewer.GetComponent<Camera>();
+			//Change the current object being viewed to whatever the user selected
 			currentViewer.SendMessage("SetTarget", planetList.selection);
-			//viewerCamera.enabled = true;
+			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 			viewerCamera.depth = 1;
 			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
 		} else {
-			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
-			//viewerCamera.enabled = false;
-			//currentViewer = GameObject.Find(planetList.selection + "Viewer");
-			//viewerCamera = currentViewer.GetComponent<Camera>();
+			//Change the current object being viewed to whatever the user selected
 			currentViewer.SendMessage("SetTarget", planetList.selection);
-			//viewerCamera.enabled = true;
+			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 			viewerCamera.depth = -1;
 			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
