@@ -6,7 +6,7 @@ using System.Collections;
  */
 
 public class ViewerAttributes : MonoBehaviour {
-	public float radius;
-	public float fov;
+	public float radius;  //Raduis that the camera will be set to, should NOT be the object's radius
+	public float fov;     //FOV that the camera should be set to when viewing this object
 
 }
