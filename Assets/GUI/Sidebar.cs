@@ -17,6 +17,9 @@ public class Sidebar : MonoBehaviour {
 	public GUISkin skin;
 	public Texture dropdownArrow;
 
+	//Used for pip camera
+	public VectorFollow pipCamera;
+
 	//Used for dropdown selections
 	public string[] bodies;
 	private int bodySelected = 0;
@@ -26,6 +29,10 @@ public class Sidebar : MonoBehaviour {
 
 	//Used to determine which dropdown is open, and disabling everything else
 	private int dropdownOpen = -1;
+
+	public void Start() {
+		pipCamera.SetTarget(bodies[bodySelected]);
+	}
 
 	public void OnGUI() {
 		//Sidebar group
@@ -39,7 +46,10 @@ public class Sidebar : MonoBehaviour {
 
 			//Primary selection
 			GUI.Label(new Rect(10, 5, sidebarWidth, 30), "Viewing");
+
+			int prevbody = bodySelected;
 			DropDown(new Rect(15, 30, sidebarWidth - 30, 30), 0, bodies, ref bodySelected);
+			if(prevbody != bodySelected) pipCamera.SetTarget(bodies[bodySelected]);
 
 		GUI.EndGroup();
 	}

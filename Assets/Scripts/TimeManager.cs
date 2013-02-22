@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour {
 	public float maxTime;					//Where the current time period ends
 	public float currTime;					//The current time
 	
-	public UISlider timeBar;				//Time bar to send updates to when time changes
+//	public UISlider timeBar;				//Time bar to send updates to when time changes
 	
 	private GameObject[] mobileBodies;
 
