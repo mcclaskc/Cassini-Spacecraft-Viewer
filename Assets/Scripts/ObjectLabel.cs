@@ -24,6 +24,7 @@ public class ObjectLabel : MonoBehaviour {
 	    if (useMainCamera)
 			{
 	        	cam = Camera.main;
+				camTransform = cam.transform;
 			}
 	    else
 			{
@@ -34,37 +35,29 @@ public class ObjectLabel : MonoBehaviour {
 		target = transform.root;
 		//Set the object Label Name
 		guitext.text = transform.root.name;
-		//Debug.Log (transform.root.name + " IS THE ROOT NAME");
+		//thisTransform.position = cam.WorldToScreenPoint(target.position);
 	}
  
  
     void Update()
-    {
-		if(!transform.root.renderer.IsVisibleFrom (Camera.main))
-		{
-			guitext.text = "";
-		}
-		else
-		{
-			guitext.text = transform.root.name;
-		}
-			
- 		
-		//Not researched yet, mirror bug fix renders this useless
-		/*
-        if (clampToScreen)
+    {   
+		if (clampToScreen)
         {
             Vector3 relativePosition = camTransform.InverseTransformPoint(target.position);
+			
             relativePosition.z =  Mathf.Max(relativePosition.z, 1.0f);
+			
             thisTransform.position = cam.WorldToViewportPoint(camTransform.TransformPoint(relativePosition + offset));
+			
             thisTransform.position = new Vector3(Mathf.Clamp(thisTransform.position.x, clampBorderSize, 1.0f - clampBorderSize),
                                              Mathf.Clamp(thisTransform.position.y, clampBorderSize, 1.0f - clampBorderSize),
                                              thisTransform.position.z);
  
         }
-        */
-       
-        thisTransform.position = cam.WorldToViewportPoint(target.position + offset);
+        else
+        {
+            thisTransform.position = cam.WorldToViewportPoint(target.position + offset);
+        }
         
     }
 }
