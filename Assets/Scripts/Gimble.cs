@@ -34,18 +34,15 @@ using System.Collections;
             {
 				//This is called whenever the user is holding down the mouse button
 				//Sets the x and y axis to the new rotation desired.
-				Debug.Log (Input.GetAxis ("Mouse X"));
-			
              	setAxis();
-
-                y = ClampAngle(y, yMinLimit, yMaxLimit);
+							y = ClampAngle(y, yMinLimit, yMaxLimit);
             }
 		
 			if(target)
 			{
 				//This is called when the user is scrolling, or not doing anything
-				setTransforms();
 				distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel"), distanceMin, distanceMax);
+				setTransforms();
 			
 			}
           
@@ -54,26 +51,26 @@ using System.Collections;
 		void setTransforms()
 		{
 			transform.rotation = Quaternion.Euler(y, x, 0);
-            transform.position = (Quaternion.Euler(y, x, 0)) * new Vector3(0.0f, 0.0f, -distance) + target.position;	
+			transform.position = Quaternion.Euler(y, x, 0) * new Vector3(0.0f, 0.0f, -distance) + target.position;	
 		}
 	
 		void setAxis()
 		{
-			x += Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
-            y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+				x += Input.GetAxis("Mouse X") * xSpeed;
+				y -= Input.GetAxis("Mouse Y") * ySpeed;
 		}
 
-        static float ClampAngle(float angle, float min, float max) 
-        {
+		static float ClampAngle(float angle, float min, float max) 
+		{
 			//Keeps our angles in workable ranges
-            if (angle < -360)
-            {
-                angle += 360;
-            }
-            if (angle > 360)
-            {
-                angle -= 360;
-            }
-            return Mathf.Clamp(angle, min, max);
-        }
+			if (angle < -360)
+			{
+					angle += 360;
+			}
+			if (angle > 360)
+			{
+					angle -= 360;
+			}
+			return Mathf.Clamp(angle, min, max);
+		}
     }

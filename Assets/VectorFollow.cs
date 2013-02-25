@@ -33,7 +33,7 @@ public class VectorFollow : MonoBehaviour {
 	
 			
 	//Call this function to set a new target		
-	void SetTarget(string newTarget){
+	public void SetTarget(string newTarget){
 		//Set our new target
 		target = GameObject.Find(newTarget).transform;
 		//Grab that target's data

@@ -8,8 +8,8 @@ using System.Collections;
 
 public class windowManagerScript : MonoBehaviour {
 	
-	public UIPopupList planetList;
-	public UIPopupList sensorList;
+//	public UIPopupList planetList;
+//	public UIPopupList sensorList;
 	public GameObject currentViewer;
 	public GameObject cassiniViewer;
 	private Camera viewerCamera;
@@ -27,7 +27,7 @@ public class windowManagerScript : MonoBehaviour {
 		//Make sure the camera is displaying to the screen
 		viewerCamera.enabled = true;
 		//Update it with the default selection
-		currentViewer.SendMessage("SetTarget", planetList.selection);
+		//currentViewer.SendMessage("SetTarget", planetList.selection);
 		Debug.Log(viewerCamera);
 	}
 	
@@ -99,18 +99,18 @@ public class windowManagerScript : MonoBehaviour {
 	void OnPlanetSelectionChange(){
 		if(!pipIsNotMain){
 			//Change the current object being viewed to whatever the user selected
-			currentViewer.SendMessage("SetTarget", planetList.selection);
+			//currentViewer.SendMessage("SetTarget", planetList.selection);
 			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 			viewerCamera.depth = 1;
-			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
+			//Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
 		} else {
 			//Change the current object being viewed to whatever the user selected
-			currentViewer.SendMessage("SetTarget", planetList.selection);
+			//currentViewer.SendMessage("SetTarget", planetList.selection);
 			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 			viewerCamera.depth = -1;
-			Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
+			//Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
 		}
 	}
 	
