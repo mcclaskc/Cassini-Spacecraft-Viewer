@@ -66,6 +66,9 @@ public class FileLoader : MonoBehaviour, DataAccess {
 
 			bodies["Titan"] = titanData;
 		}
+		
+		//Test of LoadFile function on the sun.
+		if(LoadFile("Sun", times)) Debug.Log("Sun data loaded");
 //--------------------------------------------------------------------------------------------------
 		//Cassini
 		//File where binary data exists
@@ -111,7 +114,39 @@ public class FileLoader : MonoBehaviour, DataAccess {
 			mover.SendMessage ("Loaded");
 		}
 	}
+	
+	
+	//Generalized file loading function (basically a copy paste of the titan portion of the code)
+	//Loads the file "bodyNameEphem_saturn.dat" 
+	public Boolean LoadFile(string bodyName, List<DateTime> times){
+		string filename = "Assets/Data/"+bodyName+"Ephem_saturn.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Titan ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
 
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> titanData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				titanData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+
+			bodies[bodyName] = titanData;
+			return true;
+		} else return false;
+	}
 
 	//DataAccess stuff
 	//-----------------------------
