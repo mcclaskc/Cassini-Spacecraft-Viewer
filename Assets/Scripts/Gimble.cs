@@ -56,8 +56,8 @@ using System.Collections;
 	
 		void setAxis()
 		{
-				x += Input.GetAxis("Mouse X") * xSpeed;
-				y -= Input.GetAxis("Mouse Y") * ySpeed;
+				x += Input.GetAxis("Mouse X") * xSpeed *Time.deltaTime;
+				y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 		}
 
 		static float ClampAngle(float angle, float min, float max) 
