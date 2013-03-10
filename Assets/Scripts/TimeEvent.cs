@@ -27,8 +27,6 @@ public class TimeEvent {
 		mStart = start;
 		mEnd   = end;
 		mLabel = label;
-		mGUIStyle = new GUIStyle();
-		mTexture  = new Texture2D(1,1);
 		setColor (color);
 	}
 	
