@@ -1,25 +1,34 @@
 using UnityEngine;
 using System.Collections;
  
+/// <summary>
+/// Class: ObjectLabel
+/// Author: Jacob Rieger
+/// Last Modified: 11-Mar-2013
+/// Purpose: This Script displays a GUIText element that follows your object.
+/// Usage:  This script is part of the Planet Label prefab. This script expects a GUIText element to
+/// be present on the same GameObject that it is apart of. It will assume the object you wish to display
+/// a label over is the root parent. You can set the label name in the inspector, however if you leave it unset
+/// it will use the root parents name.
+/// </summary>
 [RequireComponent (typeof (GUIText))]
 public class ObjectLabel : MonoBehaviour {
-	//Script modified from original found at http://wiki.unity3d.com/index.php?title=ObjectLabel
+	
  
-	public Transform target;  // Object that this label should follow
+	public string LabelName; 			   // Name that can be set, if unset uses Root parent name instead
+	public Transform target; 		       // Object that this label should follow
 	public Vector3 offset = Vector3.up;    // Units in world space to offset; 1 unit above object by default
-	public bool clampToScreen = false;  // If true, label will be visible even if object is off screen
+	public bool clampToScreen = false;     // If true, label will be visible even if object is off screen
 	public float clampBorderSize = 0.05f;  // How much viewport space to leave at the borders when a label is being clamped
-	public bool useMainCamera = true;   // Use the camera tagged MainCamera
-	public Camera cameraToUse ;   // Only use this if useMainCamera is false
-	public GUIText guitext; //Our GuiText that is attached to the object
+	public bool useMainCamera = true;      // Use the camera tagged MainCamera
+	public Camera cameraToUse ;   		   // Only use this if useMainCamera is false
+	public GUIText guitext; 			   //Our GuiText that is attached to the object
 	Camera cam ;
 	Transform thisTransform;
 	Transform camTransform;
  
 	void Start () 
     {
-		//This assumes that the GameObject that is the root parent has the name you wish to display and follow
-		//Set the camera
 	    thisTransform = transform;
 	    if (useMainCamera)
 			{
@@ -34,7 +43,8 @@ public class ObjectLabel : MonoBehaviour {
 		//Set the target
 		target = transform.root;
 		//Set the object Label Name
-		guitext.text = transform.root.name;
+		if(LabelName.Equals ("")) guitext.text = transform.root.name;
+		else guitext.text = LabelName;
 		//thisTransform.position = cam.WorldToScreenPoint(target.position);
 	}
  

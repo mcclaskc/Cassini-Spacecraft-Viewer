@@ -1,13 +1,20 @@
 using UnityEngine;
 using System.Collections;
-
-    public class Gimble : MonoBehaviour 
+/// <summary>
+/// Class: Gimbal
+/// Author: Jacob Rieger
+/// Last Modified: 11-Mar-2013
+/// Purpose:  This script handles the camera controls for the view of Gimbaling an object
+/// Usage:  Attach this script to your the camera you wish to gimbal with (normally main)
+/// and then set the target of what you want your center of gimbal to be in the inspector.
+/// </summary>
+    public class Gimbal : MonoBehaviour 
     {
-        public Transform target; //What you're looking at
+        public Transform target; //Center of Focus
 	
         public float distance = 10.0f; //Default distance away from target
-		public float distanceMin; //how closely your allowed to zoom
-		public float distanceMax; //how far away your allowed to zoom
+		public float distanceMin; //ZoomIn limit
+		public float distanceMax; //ZoomOut Limit
 
         public float xSpeed = 250.0f; //Panning speeds
         public float ySpeed = 120.0f;
@@ -35,7 +42,7 @@ using System.Collections;
 				//This is called whenever the user is holding down the mouse button
 				//Sets the x and y axis to the new rotation desired.
              	setAxis();
-							y = ClampAngle(y, yMinLimit, yMaxLimit);
+				y = ClampAngle(y, yMinLimit, yMaxLimit);
             }
 		
 			if(target)
@@ -56,8 +63,8 @@ using System.Collections;
 	
 		void setAxis()
 		{
-				x += Input.GetAxis("Mouse X") * xSpeed *Time.deltaTime;
-				y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+			x += Input.GetAxis("Mouse X") * xSpeed *Time.deltaTime;
+			y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 		}
 
 		static float ClampAngle(float angle, float min, float max) 
