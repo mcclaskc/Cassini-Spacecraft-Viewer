@@ -22,7 +22,6 @@ public class Movement : MonoBehaviour {
 	private int iterator; 			 //iterator for counting the updates
 	List<EphemerisData> Data; 		 //Compiled list of targets
 	
-	// Use this for initialization
 	void Start () {
 		//Debugging purposes
 		Debug.Log (transform.name);
@@ -31,9 +30,7 @@ public class Movement : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		//This function gets called continously
 		//Changes the position to movetowards the next target (next data pos in the binary)
 		
 		//Causes bodies to move "jumpily"
@@ -59,6 +56,7 @@ public class Movement : MonoBehaviour {
 		//receive it's new data.
 		DateTime Start = StartEnd[0];
 		DateTime End = StartEnd[1];
+		iterator = 0;
 		
 		Debug.Log ("Received " + Start + " as Start Date");
 		Debug.Log ("Received " + End + " as End Date");

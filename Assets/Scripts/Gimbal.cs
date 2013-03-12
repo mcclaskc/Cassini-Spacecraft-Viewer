@@ -24,6 +24,11 @@ using System.Collections;
 
         private float x = 0.0f;
         private float y = 0.0f;
+	
+		private float timelineHeight;
+		public GameObject timeline;
+	
+		private bool MouseDown = false;
 
         void Start () 
         {
@@ -31,44 +36,62 @@ using System.Collections;
             var angles = transform.eulerAngles;
             x = angles.y;
             y = angles.x;
+			
+			//Get the timeline height
+			timelineHeight = timeline.GetComponent<Timeline>().timelinePercentHeight;
+		
+			timelineHeight = Screen.height * timelineHeight;
+		
+			Debug.Log ("Time Line Height equals " + timelineHeight);
+			
 
         }
 
         void Update () 
         {
-			
-			if (target && Input.GetMouseButton(0))
-            {
-				//This is called whenever the user is holding down the mouse button
-				//Sets the x and y axis to the new rotation desired.
-             	setAxis();
-				y = ClampAngle(y, yMinLimit, yMaxLimit);
-            }
 		
-			if(target)
+			//Checking to see if mouse is over the timeline
+			if(Input.GetMouseButtonDown(0) && Input.mousePosition.y > timelineHeight)
 			{
-				//This is called when the user is scrolling, or not doing anything
-				
-				distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel"), distanceMin, distanceMax);
+				MouseDown = true;
+			}
+			if(Input.GetMouseButtonUp(0))
+			{
+				MouseDown = false;
+			}
+		
+			//Only move camera if you're not over the timeline, or are already moving the camera
+			if(Input.mousePosition.y > timelineHeight || MouseDown)
+			{
+				if (target && Input.GetMouseButton(0))
+	            {
+					//This is called whenever the user is holding down the mouse button
+					//Sets the x and y axis to the new rotation desired.
+	             	setAxis();
+					y = ClampAngle(y, yMinLimit, yMaxLimit);
+	            }
 			
-				Debug.Log(Input.GetAxis ("Mouse ScrollWheel"));
-				setTransforms ();
-				//else setZoom();
+				if(target)
+				{
+					//This is called when the user is scrolling, or not doing anything
+					distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel"), distanceMin, distanceMax);
+					setTransforms ();
+				}
 			}
 			
-			
-          
         }
 	
 	
 		void setTransforms()
 		{
+			//Sets the desired position and rotations
 			transform.rotation = Quaternion.Euler(y, x, 0);
 			transform.position = Quaternion.Euler(y, x, 0) * new Vector3(0.0f, 0.0f, -distance) + target.position;	
 		}
 	
 		void setAxis()
 		{
+			//Sets the desired angles
 			x += Input.GetAxis("Mouse X") * xSpeed *Time.deltaTime;
 			y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 		}
