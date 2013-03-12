@@ -12,14 +12,14 @@ using System.Collections;
     {
         public Transform target; //Center of Focus
 	
-        public float distance = 10.0f; //Default distance away from target
-		public float distanceMin; //ZoomIn limit
-		public float distanceMax; //ZoomOut Limit
+        public float distance = 10.0f;  //Default distance away from target
+		public float distanceMin; 		//ZoomIn limit
+		public float distanceMax; 		//ZoomOut Limit
 
-        public float xSpeed = 250.0f; //Panning speeds
+        public float xSpeed = 250.0f; 	//Panning speeds
         public float ySpeed = 120.0f;
 
-        public float yMinLimit = -20; //Limits at how far an angle you can go over or under the object
+        public float yMinLimit = -20;   //Limits at how far an angle you can go over or under the object
         public float yMaxLimit = 80;
 
         private float x = 0.0f;
@@ -36,7 +36,7 @@ using System.Collections;
 
         void Update () 
         {
-		
+			
 			if (target && Input.GetMouseButton(0))
             {
 				//This is called whenever the user is holding down the mouse button
@@ -48,12 +48,18 @@ using System.Collections;
 			if(target)
 			{
 				//This is called when the user is scrolling, or not doing anything
+				
 				distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel"), distanceMin, distanceMax);
-				setTransforms();
 			
+				Debug.Log(Input.GetAxis ("Mouse ScrollWheel"));
+				setTransforms ();
+				//else setZoom();
 			}
+			
+			
           
         }
+	
 	
 		void setTransforms()
 		{

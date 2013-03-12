@@ -2,17 +2,25 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using UnityEngine;
-
+/// <summary>
+/// Class: Movement
+/// Author: Jacob Rieger
+/// Last Modified: 12-Mar-2013
+/// Purpose:  This script holds the position values for the gameobject it is attached to and also
+/// drives it's movement through the scene.
+/// Usage: Attach this script to the gameobject you want to send position data to. You will also have to set
+/// the tag of the gameobject to "mobile" or else the FileLoader won't send the play data. 
+/// </summary>
 public class Movement : MonoBehaviour {
 	
 
-	public FileLoader fileloader; //This needs to be set to the object in scene that has FileLoader on it
-	private Vector3 target; //This is updated after every movement while playing
+	public FileLoader fileloader; 	 //This needs to be set to the object in scene that has FileLoader on it
+	private Vector3 target; 		 //This is updated after every movement while playing
 	private float updateRate = 1.0f; //updateRate in seconds, how often the target changes
 	private float nextUpdate = 0.0f; //placeholder that tracks how much time passes
-	private bool play = false; //whether or not to keep updating the target
-	private int iterator; //iterator for counting the updates
-	List<EphemerisData> Data; //Compiled list of targets
+	private bool play = false;       //whether or not to keep updating the target
+	private int iterator; 			 //iterator for counting the updates
+	List<EphemerisData> Data; 		 //Compiled list of targets
 	
 	// Use this for initialization
 	void Start () {
@@ -27,8 +35,11 @@ public class Movement : MonoBehaviour {
 	void Update () {
 		//This function gets called continously
 		//Changes the position to movetowards the next target (next data pos in the binary)
-		transform.position = Vector3.MoveTowards(transform.position, target, .3f);
 		
+		//Causes bodies to move "jumpily"
+		//transform.position = Vector3.MoveTowards(transform.position, target, .3f);
+		
+		transform.position = target;
 		
 		//Only changes target if enough time has passed and play is enabled
 		if(Time.time > nextUpdate && play)
@@ -41,15 +52,16 @@ public class Movement : MonoBehaviour {
 		}
 	}
 	
-	void Loaded(){
+	void Loaded(DateTime[] StartEnd){
 		
-		//This is the Data we request in the begining
-		//These values will need to come from the timeline
-		DateTime Start = new DateTime(2009,6,22,12, 0,0);
-		DateTime End = new DateTime(2009,6,22,15,0,0);
+		//This function is intened to be called by the timeline to let this object know when it should
+		//load new data. With the provided start and end, it will call the fileloader's GetEphemeris to
+		//receive it's new data.
+		DateTime Start = StartEnd[0];
+		DateTime End = StartEnd[1];
 		
-		//Debug.Log (Start);
-		//Debug.Log (End);
+		Debug.Log ("Received " + Start + " as Start Date");
+		Debug.Log ("Received " + End + " as End Date");
 		//Debug.Log (transform.name);
 		
 		//Fileloader returns a nice list of our data
@@ -72,8 +84,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Play(){
-		//This function is called by the timebar
-		//Sets the play variable
+		//This function is intended to be called by the timeline
 		if(play){
 			play = false;
 		}

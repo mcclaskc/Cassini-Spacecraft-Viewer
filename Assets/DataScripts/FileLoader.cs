@@ -108,10 +108,13 @@ public class FileLoader : MonoBehaviour, DataAccess {
 			bodies["Cassini_Temp"] = cassiniData;
 		}
 		
+		DateTime[] startEnd = new DateTime[2];
+		startEnd[0] = times[0];
+		startEnd[1] = times[times.Count - 1];
 		
 		//Let gameobject know they can now receive their data
 		foreach (GameObject mover in Movers){
-			mover.SendMessage ("Loaded");
+			mover.SendMessage ("Loaded", startEnd);
 		}
 	}
 	
