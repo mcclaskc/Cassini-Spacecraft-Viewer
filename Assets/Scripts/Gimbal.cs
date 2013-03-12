@@ -28,7 +28,7 @@ using System.Collections;
 		private float timelineHeight;
 		public GameObject timeline;
 	
-		private bool MouseDown = false;
+		private bool MouseDownPanning = false; //Variable if we are currently moving the camera
 
         void Start () 
         {
@@ -53,15 +53,15 @@ using System.Collections;
 			//Checking to see if mouse is over the timeline
 			if(Input.GetMouseButtonDown(0) && Input.mousePosition.y > timelineHeight)
 			{
-				MouseDown = true;
+				MouseDownPanning = true;
 			}
 			if(Input.GetMouseButtonUp(0))
 			{
-				MouseDown = false;
+				MouseDownPanning = false;
 			}
 		
 			//Only move camera if you're not over the timeline, or are already moving the camera
-			if(Input.mousePosition.y > timelineHeight || MouseDown)
+			if(MouseDownPanning)
 			{
 				if (target && Input.GetMouseButton(0))
 	            {
