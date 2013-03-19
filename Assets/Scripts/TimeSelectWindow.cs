@@ -35,7 +35,7 @@ public class TimeSelectWindow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		windowRect = new Rect(20,Screen.height/2,windowWidth*Screen.width,windowHeight*Screen.height);
+		windowRect = new Rect(20,Screen.height/3,windowWidth*Screen.width,windowHeight*Screen.height);
 	}
 	
 	// Update is called once per frame
