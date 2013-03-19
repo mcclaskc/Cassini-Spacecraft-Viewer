@@ -6,6 +6,9 @@ using System.Collections;
 public class TimeSelectWindow : MonoBehaviour {
 	
 	public float timeBarHeight = 0f;  	//Relative height of the time bar.  Currently assumes bar is at bottom of screen
+	public GameObject timeline;			//The scene's timeline should be linked here
+	
+	private Timeline currTimeline;		//This is the Timeline script attached to the linked timeline
 	
 	public float windowHeight = 0f;		//Relative height of the window.
 	public float windowWidth = 0f;		//Relative width of the window.
@@ -13,6 +16,7 @@ public class TimeSelectWindow : MonoBehaviour {
 
 	private Rect windowRect;
 	private bool showWindow = false;  	//If this is true, will show the window
+
 	
 	private string startMonth = "MM";
 	private string startDay = "DD";
@@ -36,6 +40,7 @@ public class TimeSelectWindow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		windowRect = new Rect(20,Screen.height/3,windowWidth*Screen.width,windowHeight*Screen.height);
+		currTimeline = timeline.GetComponent<Timeline>();
 	}
 	
 	// Update is called once per frame
@@ -102,6 +107,8 @@ public class TimeSelectWindow : MonoBehaviour {
 				Debug.Log("Incorrect time format.  Use only integers.");	
 			}
 			
+			currTimeline.setStart(startTime);
+			currTimeline.setEnd(endTime);
 			Debug.Log("Start Time: " + startTime + "   End Time: " + endTime);
 		}
 		
