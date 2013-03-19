@@ -106,10 +106,11 @@ public class TimeSelectWindow : MonoBehaviour {
 				error = true;
 				Debug.Log("Incorrect time format.  Use only integers.");	
 			}
-			
-			currTimeline.setStart(startTime);
-			currTimeline.setEnd(endTime);
-			Debug.Log("Start Time: " + startTime + "   End Time: " + endTime);
+			if(!error){
+				currTimeline.setStart(startTime);
+				currTimeline.setEnd(endTime);
+				Debug.Log("Start Time: " + startTime + "   End Time: " + endTime);
+			}
 		}
 		
 		//Print a warning if the user has entered an incorrect time
