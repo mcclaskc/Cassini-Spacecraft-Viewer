@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour {
 	private float updateRate = 1.0f; //updateRate in seconds, how often the target changes
 	private float nextUpdate = 0.0f; //placeholder that tracks how much time passes
 	private bool play = false;       //whether or not to keep updating the target
+	private bool reverse = false;	 //whether or not we are going in reverse
 	private int iterator; 			 //iterator for counting the updates
 	List<EphemerisData> Data; 		 //Compiled list of targets
 	
@@ -39,13 +40,23 @@ public class Movement : MonoBehaviour {
 		transform.position = target;
 		
 		//Only changes target if enough time has passed and play is enabled
-		if(Time.time > nextUpdate && play)
+		if(Time.time > nextUpdate)
 		{
-			//Sets next update with updateRate
-			nextUpdate = Time.time + updateRate;
-			//New target from Data
-			target = Data[iterator].position;
-			iterator++;
+			if(play){
+				//Sets next update with updateRate
+				nextUpdate = Time.time + updateRate;
+				//New target from Data
+				target = Data[iterator].position;
+				iterator++;
+			} else if(reverse && iterator != 0){
+				//Sets next update with updateRate
+				nextUpdate = Time.time + updateRate;
+				//New target from Data
+				iterator--;
+				target = Data[iterator].position;
+				
+				
+			}
 		}
 	}
 	
@@ -89,5 +100,16 @@ public class Movement : MonoBehaviour {
 		else{
 			play = true;
 		}
+	}
+	
+	void Reverse(){
+		reverse = !reverse;
+	}
+	
+	void Reset(){
+		nextUpdate = 0.0f;
+		iterator = 0;
+		target = Data[iterator].position;
+		transform.position = target;
 	}
 }
