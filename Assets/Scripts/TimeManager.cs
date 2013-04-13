@@ -53,4 +53,25 @@ public class TimeManager : MonoBehaviour {
 		Debug.Log("Current Step is " + currValue);
 		currTime = (currValue * defaultTimeStep) + minTime;
 	}
+	
+	void Play(){
+		foreach (GameObject mover in mobileBodies){
+			mover.SendMessage ("Play");
+		}
+	}
+	
+	void Reverse(){
+		foreach (GameObject mover in mobileBodies){
+			mover.SendMessage ("Reverse");
+		}
+	}
+	
+	void Reset(){
+		foreach (GameObject mover in mobileBodies){
+			mover.SendMessage ("Reset");
+		}
+	}
+	
+	
+	
 }

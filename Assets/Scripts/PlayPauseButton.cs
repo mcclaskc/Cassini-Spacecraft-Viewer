@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayPauseButton : MonoBehaviour {
 	
+	public GameObject timeManager;
 	public Texture2D playTexture;
 	public Texture2D pauseTexture;
 	public Texture2D resetTexture;
@@ -17,7 +18,7 @@ public class PlayPauseButton : MonoBehaviour {
 	private Rect resetBox;
 	private Rect reverseBox;
 	private Rect playBox;
-	private GameObject[] mobileBodies;
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,6 @@ public class PlayPauseButton : MonoBehaviour {
 		resetBox = new Rect(xPosition*Screen.width,yPosition*Screen.height,width,height);
 		reverseBox = new Rect((xPosition*Screen.width)+width+2.5f,yPosition*Screen.height,width,height);
 		playBox = new Rect((xPosition*Screen.width)+(2*width)+5,yPosition*Screen.height,width,height);
-		mobileBodies = GameObject.FindGameObjectsWithTag("Mobile");
 	}
 	
 	// Update is called once per frame
@@ -35,23 +35,20 @@ public class PlayPauseButton : MonoBehaviour {
 	}
 	
 	void OnGUI(){
+		//----Reset portion----//
 		if(GUI.Button(resetBox, resetTexture)){
-			foreach (GameObject mover in mobileBodies){
-					mover.SendMessage ("Reset");
-				}
+			timeManager.SendMessage("Reset");
 		}
+		
+		//----Reverse portion----//
 		if(!isReversing){
 			if(GUI.Button(reverseBox, reverseTexture)){
-				foreach (GameObject mover in mobileBodies){
-					mover.SendMessage ("Reverse");
-				}
+				timeManager.SendMessage("Reverse");
 				isReversing = !isReversing;
 			}
 		}else{
 			if(GUI.Button(reverseBox, pauseTexture)){
-				foreach (GameObject mover in mobileBodies){
-					mover.SendMessage ("Reverse");
-				}
+				timeManager.SendMessage("Reverse");
 				isReversing = !isReversing;
 			}
 		}
@@ -59,17 +56,13 @@ public class PlayPauseButton : MonoBehaviour {
 	//----Play/Pause portion-----//
 		if(!isPlaying){
 			if(GUI.Button(playBox, playTexture)){
+				timeManager.SendMessage("Play");
 				isPlaying = !isPlaying;
-				foreach (GameObject mover in mobileBodies){
-					mover.SendMessage ("Play");
-				}
 			}
 		}else{
 			if(GUI.Button(playBox, pauseTexture)){
+				timeManager.SendMessage("Play");
 				isPlaying = !isPlaying;
-				foreach (GameObject mover in mobileBodies){
-					mover.SendMessage ("Play");
-				}
 			}
 		}
 	}
