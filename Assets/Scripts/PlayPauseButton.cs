@@ -13,6 +13,7 @@ public class PlayPauseButton : MonoBehaviour {
 	public float yPosition;
 	
 	private bool isPlaying;
+	private bool isReversing;
 	private Rect resetBox;
 	private Rect reverseBox;
 	private Rect playBox;
@@ -21,7 +22,7 @@ public class PlayPauseButton : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isPlaying = false;
-		
+		isReversing = false;
 		resetBox = new Rect(xPosition*Screen.width,yPosition*Screen.height,width,height);
 		reverseBox = new Rect((xPosition*Screen.width)+width+2.5f,yPosition*Screen.height,width,height);
 		playBox = new Rect((xPosition*Screen.width)+(2*width)+5,yPosition*Screen.height,width,height);
@@ -39,9 +40,19 @@ public class PlayPauseButton : MonoBehaviour {
 					mover.SendMessage ("Reset");
 				}
 		}
-		if(GUI.Button(reverseBox, reverseTexture)){
-			foreach (GameObject mover in mobileBodies){
-				mover.SendMessage ("Reverse");
+		if(!isReversing){
+			if(GUI.Button(reverseBox, reverseTexture)){
+				foreach (GameObject mover in mobileBodies){
+					mover.SendMessage ("Reverse");
+				}
+				isReversing = !isReversing;
+			}
+		}else{
+			if(GUI.Button(reverseBox, pauseTexture)){
+				foreach (GameObject mover in mobileBodies){
+					mover.SendMessage ("Reverse");
+				}
+				isReversing = !isReversing;
 			}
 		}
 		
