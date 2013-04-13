@@ -65,7 +65,184 @@ public class FileLoader : MonoBehaviour, DataAccess {
 			}
 
 			bodies["Titan"] = titanData;
+			
 		}
+		
+		filename = "Assets/Data/Dione/dioneEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Dione ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> dioneData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				dioneData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Dione"] = dioneData;
+			
+		}
+		
+		
+		
+		filename = "Assets/Data/Enceladus/enceladusEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Enceladus ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> enceladusData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				enceladusData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Enceladus"] = enceladusData;
+			
+		}
+		
+		
+		
+		filename = "Assets/Data/Iapetus/iapetusEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Iapetus ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> iapetusData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				iapetusData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Iapetus"] = iapetusData;
+			
+		}
+		
+		
+		filename = "Assets/Data/Mimas/mimasEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Mimas ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> mimasData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				mimasData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Mimas"] = mimasData;
+			
+		}
+		
+		
+		filename = "Assets/Data/Rhea/rheaEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Rhea ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> rheaData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				rheaData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Rhea"] = rheaData;
+			
+		}
+		
+		
+		/*
+		filename = "Assets/Data/Mimas/mimasEphem_saturn_2009-JUN-21.dat";
+		if(File.Exists(filename)) {
+			List<Vector3> posList = new List<Vector3>();
+			Debug.Log("Loading Mimas ephemera");
+			BinaryReader binReader = new BinaryReader(File.Open(filename, FileMode.Open));
+			bool finished = false;
+
+			while(! finished) {
+				try{
+					double x = binReader.ReadDouble();
+					double z = binReader.ReadDouble();
+					double y = binReader.ReadDouble();
+					posList.Add(new Vector3((float) x, (float)y, (float)z));
+				} catch (Exception e) {
+					finished = true;
+				}
+			}
+
+			//Match up the positions and times
+			SortedList<DateTime, EphemerisData> mimasData = new SortedList<DateTime, EphemerisData>();
+			for(int i = 0; i < posList.Count && i < times.Count; i++) {
+				mimasData.Add(times[i], new EphemerisData(posList[i], times[i]));
+			}
+			
+			bodies["Mimas"] = mimasData;
+			
+		}*/
 		
 		//Test of LoadFile function on the sun.
 		if(LoadFile("Sun", times)) Debug.Log("Sun data loaded");
