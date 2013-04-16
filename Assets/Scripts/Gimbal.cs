@@ -39,12 +39,7 @@ using System.Collections;
             y = angles.x;
 			
 			//Get the timeline height
-			timelineHeight = timeline.GetComponent<Timeline>().timelinePercentHeight;
-		
-			timelineHeight = Screen.height * timelineHeight;
-		
-			Debug.Log ("Time Line Height equals " + timelineHeight);
-			
+			timelineHeight = timeline.GetComponent<Timeline>().timelineHeight;
 
         }
 

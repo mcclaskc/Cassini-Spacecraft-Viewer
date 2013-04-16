@@ -18,6 +18,8 @@ using System.Collections.Generic;
 ///     set Timeline times with setStart(), setEnd(), setTimeline()
 /// </summary>
 public class Timeline : MonoBehaviour {
+
+	public GUISkin skin;
 	
 	// Toggle variable for output strings
 	public bool debugStrings = false;
@@ -29,6 +31,16 @@ public class Timeline : MonoBehaviour {
 	private DateTime visibleTimeEnd;
 	private TimeSpan visibleRange;
 	private TimeSpan totalRange;
+
+	//Variables for the timeline selection
+	private DateTime potentialTimeStart;
+	private DateTime potentialTimeEnd;
+	private string potentialStartMonth;
+	private string potentialStartDay;
+	private string potentialStartYear;
+	private string potentialEndMonth;
+	private string potentialEndDay;
+	private string potentialEndYear;
 	
 	// Variables for feeding object play functions
 	// timelineStep represents the granularity of updates
@@ -40,12 +52,10 @@ public class Timeline : MonoBehaviour {
 	public bool refreshCurrentTime = false;
 	
 	// Public access to timelineHeight Controls
-	public float timelinePercentHeight = 0.3f;
+	public float timelineHeight = 200;
 	
 	// Private value settings for timeline display
-	private float timelinePercentLast = 0.0f;
 	private float timelineY = 0;
-	private float timelineHeight = 0;
 	
 	//Panning Logic
 	private float mousePanStart = -1;
@@ -168,7 +178,18 @@ public class Timeline : MonoBehaviour {
 		visibleTimeStart = totalTimeStart;
 		visibleTimeEnd   = totalTimeEnd;
 		visibleRange     = visibleTimeEnd - visibleTimeStart;
+
+		//Initiate the selection boxes
+		potentialTimeStart = totalTimeStart;
+		potentialTimeEnd = totalTimeEnd;
+		potentialStartMonth = totalTimeStart.Month.ToString();
+		potentialStartDay = totalTimeStart.Day.ToString();
+		potentialStartYear = totalTimeStart.Year.ToString();
+		potentialEndMonth = totalTimeEnd.Month.ToString();
+		potentialEndDay = totalTimeEnd.Day.ToString();
+		potentialEndYear = totalTimeEnd.Year.ToString();
 		
+
 		// User Selection, uses  TimeEvent
 		selection.setStart(new DateTime(2008,6,1,0,1,0, DateTimeKind.Utc));
 		selection.setEnd(new DateTime(2008,7,1,0,1,0, DateTimeKind.Utc));
@@ -257,6 +278,17 @@ public class Timeline : MonoBehaviour {
 	/// Usage:  Call when ever the visible range has been modified
 	/// </summary>
 	void FindVisibleTickmarks(){
+		//Also update the selection dates
+		potentialTimeStart = visibleTimeStart;
+		potentialTimeEnd = visibleTimeEnd;
+		potentialStartDay = visibleTimeStart.Day + "";
+		potentialStartMonth = visibleTimeStart.Month + "";
+		potentialStartYear = visibleTimeStart.Year + "";
+
+		potentialEndDay = visibleTimeEnd.Day + "";
+		potentialEndMonth = visibleTimeEnd.Month + "";
+		potentialEndYear = visibleTimeEnd.Year + "";
+
 		visibleRange = visibleTimeEnd - visibleTimeStart;
 		
 		visYears.Clear ();
@@ -351,7 +383,7 @@ public class Timeline : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-	
+		timelineY = Screen.height - timelineHeight; 
 	}
 	
 	/// <summary>
@@ -370,13 +402,6 @@ public class Timeline : MonoBehaviour {
 				Debug.Log(totalTimeEnd);
 			
 			FindVisibleTickmarks();
-		}
-		
-		// If the timeline percent height has changed modify the timeline
-		if(timelinePercentHeight != timelinePercentLast){
-			timelinePercentLast = timelinePercentHeight;
-			timelineY      = Screen.height*(1-timelinePercentHeight);
-			timelineHeight = Screen.height*timelinePercentHeight;
 		}
 		
 		// Zoom visible timeline
@@ -492,41 +517,35 @@ public class Timeline : MonoBehaviour {
 		float yOffset = timelineY+(visYears.Count*countToTimelineY)+20.0f;
 		foreach(double i in visYears){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 		yOffset = timelineY+(visMonths.Count*countToTimelineY)+20.0f;
 		foreach(double i in visMonths){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 		yOffset = timelineY+(visDays.Count*countToTimelineY)+20.0f;
 		foreach(double i in visDays){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 		yOffset = timelineY+(visHours.Count*countToTimelineY)+20.0f;
 		visToScreenX = Screen.width/visibleRange.TotalHours;
 		foreach(double i in visHours){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 		yOffset = timelineY+(visMinutes.Count*countToTimelineY)+20.0f;
 		visToScreenX = Screen.width/visibleRange.TotalMinutes;
 		foreach(double i in visMinutes){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 		yOffset = timelineY+(visSeconds.Count*countToTimelineY)+20.0f;
 		visToScreenX = Screen.width/visibleRange.TotalSeconds;
 		foreach(double i in visSeconds){
 			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark, 
-				ScaleMode.StretchToFill, true, 10.0f);
+			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
 		}
 	}
 	
@@ -572,49 +591,96 @@ public class Timeline : MonoBehaviour {
 	}
 	
 	/// <summary>
+	/// Function: DrawControlBar()
+	/// Author: Connor Janowiak
+	/// Last Modified: 13-Apr-2013
+	/// Purpose: This function draws the control bar with start/end
+	///		date control as well as play/pause
+	/// Usage: Called by OnGUI()
+	/// </summary>
+	private void DrawControlBar() {
+		GUILayout.BeginArea(new Rect(0, timelineY, Screen.width, 30));
+			GUILayout.BeginHorizontal();
+				//Get the startdate
+				potentialStartMonth 	= GUILayout.TextField(potentialStartMonth, 2);
+				potentialStartDay 		= GUILayout.TextField(potentialStartDay, 2);
+				potentialStartYear		= GUILayout.TextField(potentialStartYear, 4);
+
+				GUILayout.FlexibleSpace();
+
+				//Get the enddate 
+				potentialEndMonth 	= GUILayout.TextField(potentialEndMonth, 2);
+				potentialEndDay 		= GUILayout.TextField(potentialEndDay, 2);
+				potentialEndYear		= GUILayout.TextField(potentialEndYear, 4);
+
+				try {
+					potentialTimeStart = new DateTime(Convert.ToInt32(potentialStartYear), 
+																	Convert.ToInt32(potentialStartMonth), 
+																	Convert.ToInt32(potentialStartDay));
+					potentialTimeEnd = new DateTime(Convert.ToInt32(potentialEndYear), 
+																	Convert.ToInt32(potentialEndMonth), 
+																	Convert.ToInt32(potentialEndDay));
+
+					//Make sure the new datetime makes sense
+					if(potentialTimeEnd.CompareTo(potentialTimeStart) > 0 &&
+						potentialTimeStart.CompareTo(totalTimeStart) >= 0 &&
+						potentialTimeEnd.CompareTo(totalTimeEnd) <= 0) {
+
+						visibleTimeStart = potentialTimeStart;
+						visibleTimeEnd = potentialTimeEnd;
+						FindVisibleTickmarks();
+					}
+				} catch(Exception e) {
+				}
+
+			GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	}
+
+	
+	/// <summary>
 	/// Function: OnGUI()
 	/// Author: Don England
-	/// Last Modified: 9-Mar-2013
+	/// Last Modified: 13-Apr-2013
 	/// Purpose:  This function draws each tick marks mouse label
 	///    and background GUI box.
 	/// Usage:  Called by Unity every time the GUI is updated
 	/// </summary>
 	void OnGUI(){
-		//GUI.DrawTexture (new Rect (0,10, Screen.width, 32), tickMark, 
-		//	ScaleMode.StretchToFill, true, 10.0f);
 		
-		// OnGUI is occasionally called too often, this test doubles framerate
-		if(Event.current.type == EventType.Repaint){
-			DrawTickmarks();
+		//Set the gui skin
+		GUI.skin = skin;
+
+		// Draw Mouse Position Label (mouseTime from timeline)
+		double mouseTime;
+		DateTime mouseDate = new DateTime();
+		String mouseTimeLocation = "";
+		mouseTime = visibleRange.TotalDays/Screen.width;
+		mouseTime = mouseTime*Input.mousePosition.x;
+		mouseDate = visibleTimeStart.AddDays(mouseTime);
+		if(visibleRange.TotalDays > 15) {
+			mouseTimeLocation = mouseDate.Month + "/" + mouseDate.Day + "/" + mouseDate.Year;
+		}
+		else {
+			mouseTimeLocation = "" + mouseDate;
+		}
+
+		// Screen Variable Controls
+		GUI.Box (new Rect(-5, timelineY-1, Screen.width+10, timelineHeight+5),
+			// GUIContent indicates its area name with a
+			//    message that will set the global GUI.tooltip
+			new GUIContent("", mouseTimeLocation));
+
+		//Draw the control bar
+		DrawControlBar();
+
+		DrawTickmarks();
 			
-			// Draw Mouse Position Label (mouseTime from timeline)
-			double mouseTime;
-			DateTime mouseDate = new DateTime();
-			String mouseTimeLocation = "";
-			mouseTime = visibleRange.TotalDays/Screen.width;
-			mouseTime = mouseTime*Input.mousePosition.x;
-			mouseDate = visibleTimeStart.AddDays(mouseTime);
-			if(visibleRange.TotalDays > 15){
-				mouseTimeLocation = mouseDate.Month + "/" + mouseDate.Day + "/" + mouseDate.Year;
-			}
-			else{
-				mouseTimeLocation = "" + mouseDate;
-			}
-			
-			// Screen Variable Controls
-			GUI.Box (new Rect(0, timelineY, Screen.width, timelineHeight),
-				// GUIContent indicates its area name with a
-				//    message that will set the global GUI.tooltip
-				new GUIContent("", mouseTimeLocation));
-			
-			
-			DrawEvents();
-			
-			// Label is the area in which to display the hover tooltip
-			//    for any GUIContent that indicates a tooltip
-			GUI.Label( new Rect((Screen.width - (totalTimeEnd.ToString().Length*5))/2,
-				timelineY,Screen.width, 20),GUI.tooltip);
-			
-	}
+		DrawEvents();
+		
+		// Label is the area in which to display the hover tooltip
+		//    for any GUIContent that indicates a tooltip
+		GUI.Label(new Rect((Screen.width - (totalTimeEnd.ToString().Length*5))/2,
+			timelineY,Screen.width, 20),GUI.tooltip);
 	}
 }
