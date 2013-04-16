@@ -16,7 +16,7 @@ public class Movement : MonoBehaviour {
 
 	public FileLoader fileloader; 	 //This needs to be set to the object in scene that has FileLoader on it
 	private Vector3 target; 		 //This is updated after every movement while playing
-	private float updateRate = 1.0f; //updateRate in seconds, how often the target changes
+	private float updateRate = .1f; //updateRate in seconds, how often the target changes
 	private float nextUpdate = 0.0f; //placeholder that tracks how much time passes
 	private bool play = false;       //whether or not to keep updating the target
 	private bool reverse = false;	 //whether or not we are going in reverse
@@ -32,11 +32,8 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-		//Changes the position to movetowards the next target (next data pos in the binary)
 		
-		//Causes bodies to move "jumpily"
-		//transform.position = Vector3.MoveTowards(transform.position, target, .3f);
-		
+		//Smooth movement when playing quickly, choppy if slow
 		transform.position = target;
 		
 		//Only changes target if enough time has passed and play is enabled
@@ -54,8 +51,6 @@ public class Movement : MonoBehaviour {
 				//New target from Data
 				iterator--;
 				target = Data[iterator].position;
-				
-				
 			}
 		}
 	}
@@ -71,21 +66,10 @@ public class Movement : MonoBehaviour {
 		
 		Debug.Log ("Received " + Start + " as Start Date");
 		Debug.Log ("Received " + End + " as End Date");
-		//Debug.Log (transform.name);
 		
 		//Fileloader returns a nice list of our data
 		Data = fileloader.GetEphemeris(Start, End, transform.name);
 		
-		//Prints to the console of all our Data
-		//Used to confirm correct data being used
-		/*
-		for(int i = 0; i < Data.Count; i++)
-		{
-			
-			Debug.Log (Data[i].position + "  " + Data[i].time);
-			
-		}
-		*/
 		//Sets you to the first position of the aquired data
 		//Target set to yourself as well
 		transform.position = Data[0].position;
@@ -103,6 +87,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Reverse(){
+		if(play && !reverse) play = false;
 		reverse = !reverse;
 	}
 	

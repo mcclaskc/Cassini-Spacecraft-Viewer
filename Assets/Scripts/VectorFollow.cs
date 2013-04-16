@@ -42,5 +42,6 @@ public class VectorFollow : MonoBehaviour {
 		radius = targetAttributes.radius;
 		self.fov = targetAttributes.fov;
 		Debug.Log("Set viewer target to " + newTarget + ". Radius is now " + radius);
+		gameObject.transform.parent = target.transform;
 	}
 }

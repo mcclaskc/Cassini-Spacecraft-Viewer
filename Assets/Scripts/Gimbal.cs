@@ -3,7 +3,7 @@ using System.Collections;
 /// <summary>
 /// Class: Gimbal
 /// Author: Jacob Rieger
-/// Last Modified: 11-Mar-2013
+/// Last Modified: 15-April-2013
 /// Purpose:  This script handles the camera controls for the view of Gimbaling an object
 /// Usage:  Attach this script to your the camera you wish to gimbal with (normally main)
 /// and then set the target of what you want your center of gimbal to be in the inspector.
@@ -29,7 +29,8 @@ using System.Collections;
 		public GameObject timeline;
 	
 		private bool MouseDownPanning = false; //Variable if we are currently moving the camera
-
+		private bool notOverTimebar   = false;
+		
         void Start () 
         {
 			//Set our initial angles
@@ -49,12 +50,19 @@ using System.Collections;
 
         void Update () 
         {
+			notOverTimebar = false;
 		
 			//Checking to see if mouse is over the timeline
 			if(Input.GetMouseButtonDown(0) && Input.mousePosition.y > timelineHeight)
 			{
 				MouseDownPanning = true;
 			}
+		
+			if(Input.mousePosition.y > timelineHeight)
+			{
+				notOverTimebar = true;
+			}
+
 			if(Input.GetMouseButtonUp(0))
 			{
 				MouseDownPanning = false;
@@ -70,7 +78,9 @@ using System.Collections;
 	             	setAxis();
 					y = ClampAngle(y, yMinLimit, yMaxLimit);
 	            }
-			
+			}
+			if(notOverTimebar)
+			{
 				if(target)
 				{
 					//This is called when the user is scrolling, or not doing anything
@@ -78,7 +88,6 @@ using System.Collections;
 					setTransforms ();
 				}
 			}
-			
         }
 	
 	
