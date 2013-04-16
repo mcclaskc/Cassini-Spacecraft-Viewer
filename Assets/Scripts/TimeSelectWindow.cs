@@ -39,7 +39,7 @@ public class TimeSelectWindow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		windowRect = new Rect(20,Screen.height/3,windowWidth*Screen.width,windowHeight*Screen.height);
+		windowRect = new Rect(20,Screen.height/3,windowWidth,windowHeight);
 		currTimeline = timeline.GetComponent<Timeline>();
 	}
 	
@@ -72,20 +72,20 @@ public class TimeSelectWindow : MonoBehaviour {
 		GUI.Label(new Rect(20,(3*ownHeight/10),100,20),"End Time");
 		
 		//Create textfields to recieve user input for the start time, (mm/dd/yyyy)
-		startHour = GUI.TextField(new Rect((2*ownWidth/10),(1.5f*ownHeight/10),30,20),startHour,2);
-		startMin = GUI.TextField(new Rect((2.75f*ownWidth/10),(1.5f*ownHeight/10),30,20),startMin,2);
-		startSec = GUI.TextField(new Rect((3.5f*ownWidth/10),(1.5f*ownHeight/10),30,20),startSec,2);
-		startMonth = GUI.TextField(new Rect((4.5f*ownWidth/10),(1.5f*ownHeight/10),30,20),startMonth,2);
-		startDay = GUI.TextField(new Rect((5.25f*ownWidth/10),(1.5f*ownHeight/10),30,20),startDay,2);
-		startYear = GUI.TextField(new Rect((6*ownWidth/10),(1.5f*ownHeight/10),60,20),startYear,4);
+		startHour = GUI.TextField(new Rect((2.5f*ownWidth/10),(1.5f*ownHeight/10),30,20),startHour,2);
+		startMin = GUI.TextField(new Rect((3.4f*ownWidth/10),(1.5f*ownHeight/10),30,20),startMin,2);
+		startSec = GUI.TextField(new Rect((4.3f*ownWidth/10),(1.5f*ownHeight/10),30,20),startSec,2);
+		startMonth = GUI.TextField(new Rect((5.5f*ownWidth/10),(1.5f*ownHeight/10),30,20),startMonth,2);
+		startDay = GUI.TextField(new Rect((6.4f*ownWidth/10),(1.5f*ownHeight/10),30,20),startDay,2);
+		startYear = GUI.TextField(new Rect((7.3f*ownWidth/10),(1.5f*ownHeight/10),60,20),startYear,4);
 		
 		//Create textfields to recieve user input for the end time, (mm/dd/yyyy)
-		endHour = GUI.TextField(new Rect((2*ownWidth/10),(3*ownHeight/10),30,20),endHour,2);
-		endMin = GUI.TextField(new Rect((2.75f*ownWidth/10),(3*ownHeight/10),30,20),endMin,2);
-		endSec = GUI.TextField(new Rect((3.5f*ownWidth/10),(3*ownHeight/10),30,20),endSec,2);
-		endMonth = GUI.TextField(new Rect((4.5f*ownWidth/10),(3*ownHeight/10),30,20),endMonth,2);
-		endDay = GUI.TextField(new Rect((5.25f*ownWidth/10),(3*ownHeight/10),30,20),endDay,2);
-		endYear = GUI.TextField(new Rect((6*ownWidth/10),(3*ownHeight/10),60,20),endYear,4);
+		endHour = GUI.TextField(new Rect((2.5f*ownWidth/10),(3*ownHeight/10),30,20),endHour,2);
+		endMin = GUI.TextField(new Rect((3.4f*ownWidth/10),(3*ownHeight/10),30,20),endMin,2);
+		endSec = GUI.TextField(new Rect((4.3f*ownWidth/10),(3*ownHeight/10),30,20),endSec,2);
+		endMonth = GUI.TextField(new Rect((5.5f*ownWidth/10),(3*ownHeight/10),30,20),endMonth,2);
+		endDay = GUI.TextField(new Rect((6.4f*ownWidth/10),(3*ownHeight/10),30,20),endDay,2);
+		endYear = GUI.TextField(new Rect((7.3f*ownWidth/10),(3*ownHeight/10),60,20),endYear,4);
 		
 
 		
