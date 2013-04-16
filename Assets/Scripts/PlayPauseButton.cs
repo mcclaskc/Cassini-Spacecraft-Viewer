@@ -45,6 +45,7 @@ public class PlayPauseButton : MonoBehaviour {
 			if(GUI.Button(reverseBox, reverseTexture)){
 				timeManager.SendMessage("Reverse");
 				isReversing = !isReversing;
+				isPlaying = false;
 			}
 		}else{
 			if(GUI.Button(reverseBox, pauseTexture)){
@@ -58,6 +59,7 @@ public class PlayPauseButton : MonoBehaviour {
 			if(GUI.Button(playBox, playTexture)){
 				timeManager.SendMessage("Play");
 				isPlaying = !isPlaying;
+				isReversing = false;
 			}
 		}else{
 			if(GUI.Button(playBox, pauseTexture)){
