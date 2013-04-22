@@ -14,7 +14,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
 	
 
-	public FileLoader fileloader; 	 //This needs to be set to the object in scene that has FileLoader on it
+	public DataAccess fileloader; 	 //This needs to be set to the object in scene that has FileLoader on it
 	private Vector3 target; 		 //This is updated after every movement while playing
 	private float updateRate = .1f; //updateRate in seconds, how often the target changes
 	private float nextUpdate = 0.0f; //placeholder that tracks how much time passes
@@ -24,8 +24,6 @@ public class Movement : MonoBehaviour {
 	List<EphemerisData> Data; 		 //Compiled list of targets
 	
 	void Start () {
-		//Debugging purposes
-		Debug.Log (transform.name);
 		//Initialize the iterator
 		iterator = 0;
 	

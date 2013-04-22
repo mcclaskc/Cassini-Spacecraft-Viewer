@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class FileLoader : MonoBehaviour, DataAccess {
+public class FileLoader : DataAccess {
 
 	//This is an active loader, and just loads up all the files at the beginning
 	Dictionary<string, SortedList<DateTime, EphemerisData>> bodies = new Dictionary<string, SortedList<DateTime, EphemerisData>>();
@@ -330,30 +330,30 @@ public class FileLoader : MonoBehaviour, DataAccess {
 
 	//DataAccess stuff
 	//-----------------------------
-	public List<SensorDataAvailability> AvailableDataBlocks(DateTime start, DateTime end) {
+	public override List<SensorDataAvailability> AvailableDataBlocks(DateTime start, DateTime end) {
 		return new List<SensorDataAvailability>();
 	}
 
-	public void RequestTimeRange(DateTime start, DateTime end, string sensorName) {
+	public override void RequestTimeRange(DateTime start, DateTime end, string sensorName) {
 
 	}
 
-	public bool TimeRangeAvailable(DateTime start, DateTime end, string sensorName) {
+	public override bool TimeRangeAvailable(DateTime start, DateTime end, string sensorName) {
 		return false;
 	}
 
-	public List<DataChunk> GetData(DateTime start, DateTime end, string body) {
+	public override List<DataChunk> GetData(DateTime start, DateTime end, string body) {
 		return null;
 	}
 
-	public void RequestEphemeris(DateTime start, DateTime end, string body) {
+	public override void RequestEphemeris(DateTime start, DateTime end, string body) {
 	}
 
-	public bool EphemerisAvailable(DateTime start, DateTime end, string body) {
+	public override bool EphemerisAvailable(DateTime start, DateTime end, string body) {
 		return true;
 	}
 
-	public List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string bodyName) {
+	public override List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string bodyName) {
 		List<EphemerisData> accumulator = new List<EphemerisData>();
 		Debug.Log(bodies.ContainsKey(bodyName));
 		if(bodies.ContainsKey(bodyName)) {

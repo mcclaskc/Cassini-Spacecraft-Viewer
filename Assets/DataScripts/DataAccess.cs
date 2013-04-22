@@ -11,27 +11,27 @@ using UnityEngine;
 //Pull the data when available using GetData
 
 
-public interface DataAccess {
+public abstract class DataAccess : MonoBehaviour {
 
 		//Functions used for information about what data exists
 	//Used to determine what types of data are available
-	List<SensorDataAvailability> AvailableDataBlocks(DateTime start, DateTime end);
+	public abstract List<SensorDataAvailability> AvailableDataBlocks(DateTime start, DateTime end);
 
 		//Functions used for actual data access
 	//Used to request that a particular set of data be loaded
-	void RequestTimeRange(DateTime start, DateTime end, string sensorName);
+	public abstract void RequestTimeRange(DateTime start, DateTime end, string sensorName);
 	//Returns whether the timerange has an uninterrupted chunk of data for the given sensor
-	bool TimeRangeAvailable(DateTime start, DateTime end, string sensorName);
+	public abstract bool TimeRangeAvailable(DateTime start, DateTime end, string sensorName);
 	//Gets the actual data for a sensor and time range
-	List<DataChunk> GetData(DateTime start, DateTime end, string sensorName);
+	public abstract List<DataChunk> GetData(DateTime start, DateTime end, string sensorName);
 
 	//Functions used for ephemeris data
 	//Used to request some ephemeris be loaded
-	void RequestEphemeris(DateTime start, DateTime end, string body);
+	public abstract void RequestEphemeris(DateTime start, DateTime end, string body);
 	//Returns true if the timerange has this chunk of telemetry loaded
-	bool EphemerisAvailable(DateTime start, DateTime end, string body);
+	public abstract bool EphemerisAvailable(DateTime start, DateTime end, string body);
 	//Retrieves the list of positions for a body
-	List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string sensorName);
+	public abstract List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string sensorName);
 
 }
 
