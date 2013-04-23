@@ -16,7 +16,6 @@ public class NetworkAccess : DataAccess {
 
 	//Private list of ephemeris data
 	private List<EphemerisData> ephem = new List<EphemerisData>();
-	private Dictionary<int, EphemerisData>
 
 	public override List<SensorDataAvailability> AvailableDataBlocks(DateTime start, DateTime end) {
 		return new List<SensorDataAvailability>();
@@ -44,8 +43,7 @@ public class NetworkAccess : DataAccess {
 		url += end.Year + "-" + end.Month + "-" + end.Day + "%20";
 		url += end.Hour + ":" + end.Minute + ":" + end.Second;
 
-		//ThreadPool.QueueUserWorkItem(new WaitCallback(GetEphem), url);
-		GetEphem(url);
+		ThreadPool.QueueUserWorkItem(new WaitCallback(GetEphem), url);
 	}
 
 	//Returns true if the timerange has this chunk of telemetry loaded
@@ -70,13 +68,14 @@ public class NetworkAccess : DataAccess {
 
 			int i = 0;
 			try{
-				json list = json.fromString(Encoding.ASCII.GetString(pageData)).getArray("content");
+				json list = json.fromString(Encoding.ASCII.GetString(pageData)).getObject("content").getArray("ephems");
 				json chunk;
 				for(i = 0; i < list.length(); i++) {
 					//Get this particular peice of data
 					chunk = list._get(i);
-					Vector3 pos = chunk.getVector3("ephem");
-					DateTime time = DateTime.Parse(chunk.getObject("ephem").getString("timestamp"));
+					Vector3 pos = list.getVector3(i);
+					DateTime time = DateTime.Parse(chunk.getString("timestamp"));
+					string body = chunk.getString("body");
 					EphemerisData eph = new EphemerisData(pos, time);
 					ephemlocal.Add(eph);
 				}
@@ -85,7 +84,6 @@ public class NetworkAccess : DataAccess {
 			} finally {
 				//Put stuff in the ephem
 				lock(ephem) {
-					Debug.Log("Success!");
 					foreach(EphemerisData e in ephemlocal)
 						ephem.Add(e);
 				}
