@@ -10,7 +10,6 @@ public class PlayPauseButton : MonoBehaviour {
 	public Texture2D reverseTexture;
 	public float height;
 	public float width;
-	public float xPosition;
 	public float yPosition;
 	
 	private bool isPlaying;
@@ -24,9 +23,9 @@ public class PlayPauseButton : MonoBehaviour {
 	void Start () {
 		isPlaying = false;
 		isReversing = false;
-		resetBox = new Rect(xPosition*Screen.width,yPosition*Screen.height,width,height);
-		reverseBox = new Rect((xPosition*Screen.width)+width+2.5f,yPosition*Screen.height,width,height);
-		playBox = new Rect((xPosition*Screen.width)+(2*width)+5,yPosition*Screen.height,width,height);
+		resetBox = new Rect((Screen.width/2f)+(width*.5f),Screen.height - yPosition,width,height);
+		reverseBox = new Rect((Screen.width/2f)+(width * 1.6f),Screen.height - yPosition,width,height);
+		playBox = new Rect((Screen.width/2f)+(width * 2.5f)+5,Screen.height - yPosition,width,height);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +34,8 @@ public class PlayPauseButton : MonoBehaviour {
 	}
 	
 	void OnGUI(){
+		//Ensure all of the butttons are drawn on top of the scene
+		GUI.depth = -1;
 		//----Reset portion----//
 		if(GUI.Button(resetBox, resetTexture)){
 			timeManager.SendMessage("Reset");
