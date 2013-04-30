@@ -74,7 +74,14 @@ public class Timeline : MonoBehaviour {
 	private tickType myTickType;
 	private double tickMarkInterval;
 	private TimeSpan tickSpan;
+
+	private struct TickDescription {
+		public DateTime time;
+		public string description;
+		public float yOffset;
+	}
 	
+	private List<TickDescription> ticks = new List<TickDescription>();
 	
 	// Tick Mark Take 2
 	private List<double> visYears   = new List<double>();
@@ -202,70 +209,38 @@ public class Timeline : MonoBehaviour {
 			new DateTime(2010,1,1,0,0,0, DateTimeKind.Utc), "Test Event",
 			new Color(0.0f,1.0f,0.0f,0.5f)));
 	}
-	
-	/// <summary>
-	/// Function: FindTickMarks()
-	/// Author: Don England
-	/// Last Modified: 19-Feb-2013
-	/// Purpose:  This function is meant to find the tickType used
-	///    for generating tickMarkInterval which combine to produce 
-	///    a tickOffset for computing visible tick marks
-	/// Usage:  Call when ever the visible range has been modified
-	/// </summary>
-	void FindTickMarks(){
-		// Find the Current Visible Range
-		visibleRange = visibleTimeEnd - visibleTimeStart;
-		double typeRange = visibleRange.TotalDays;
-		if( typeRange > (365.25*numberOfTickMarks)){
-			//use years
-			myTickType = tickType.years;
-			for( int k = 0; k < (totalRange.Days/365.25); k++){
-				if(typeRange/(365.25*k) <= numberOfTickMarks)
-					totalTimeStart.AddYears(1);
-			}
-		}else if( typeRange > (30.5*numberOfTickMarks)){
-			//use months
-			myTickType = tickType.months;
-		}else if( typeRange > numberOfTickMarks){
-			//use days
-			myTickType = tickType.days;
-		}else{
-			typeRange = visibleRange.TotalMinutes;
-			if( typeRange > (60 * numberOfTickMarks)){
-				//use hours
-				myTickType = tickType.hours;
-			}else if( typeRange > numberOfTickMarks){
-				//use minutes
-				myTickType = tickType.minutes;
-			}
-			else{
-				//use seconds
-				myTickType = tickType.seconds;
-			}
+
+	//Only add ticks that are within a certain distance away from already extant ones
+	void SafeAddTicks(TickDescription t, TimeSpan distance) {
+		bool safe = true;
+		for(int i = 0; i < ticks.Count && safe; i++) {
+			safe = (ticks[i].time - t.time).Duration() > distance;
 		}
-		
-		FindTickMarkInterval();			
+
+		if(safe)
+			ticks.Add(t);
 	}
-	
-	/// <summary>
-	/// Function: FindTickMarkInterval()
-	/// Author: Don England
-	/// Last Modified: 19-Feb-2013
-	/// Purpose:  This function is meant to find the tick interval
-	///    for use in computing the visible ticks. Separated from
-	///    FindTickMarks for readability/responsibility of function
-	/// Usage:  Call when ever the tick mark type has changed
-	/// </summary>
-	void FindTickMarkInterval(){
-		if( myTickType == tickType.years ||
-			myTickType == tickType.months ||
-			myTickType == tickType.days){
-				tickMarkInterval = visibleRange.TotalDays/numberOfTickMarks;
-		}else if(myTickType == tickType.hours ||
-				myTickType == tickType.minutes){
-				tickMarkInterval = visibleRange.TotalMinutes/numberOfTickMarks;
-		}else{
-			tickMarkInterval = visibleRange.TotalSeconds/numberOfTickMarks;
+
+	void AddTickLevel(float dayStartRange, float dayEndRange, float finalY, TimeSpan delta, DateTime start, Func<DateTime, DateTime> increment, string descriptor) {
+		//Make sure this level should be visible
+		if(visibleRange.TotalDays < dayStartRange) {
+
+			//Figure out where the height of the text should be
+			float ratio = (dayStartRange - (float)visibleRange.TotalDays) / (dayStartRange - dayEndRange);
+			ratio = ratio > 1.0f ? 1.0f : ratio;
+			float yOffset = timelineY + finalY + (1-ratio) * (timelineHeight - finalY + 10.0f);
+
+			//And loop through the available spots
+			DateTime current = start;
+			while(current < visibleTimeEnd) {
+				DateTime added = increment(current);
+				TickDescription t = new TickDescription();
+				t.time = added;
+				t.description = added.ToString(descriptor);
+				t.yOffset = yOffset;
+				SafeAddTicks(t, delta);
+				current = added;
+			}
 		}
 	}
 	
@@ -297,6 +272,76 @@ public class Timeline : MonoBehaviour {
 		visHours.Clear ();
 		visMinutes.Clear ();
 		visSeconds.Clear ();
+		ticks.Clear();
+
+		//Which markers should we be looking for?
+		//years
+		if(visibleTimeStart.Year < visibleTimeEnd.Year) {
+			//Add in year changes
+			for(int i = visibleTimeStart.Year + 1; i <= visibleTimeEnd.Year; i++) {
+				TickDescription t = new TickDescription();
+				t.time = new DateTime(i, 1, 1);
+				t.description = i + "";
+				t.yOffset = timelineY + 40.0f;
+				ticks.Add(t);
+			}
+		}
+
+		//months
+		AddTickLevel(1200, 600, 50.0f, 
+				new TimeSpan(10,0,0,0),
+				new DateTime(visibleTimeStart.Year,
+					visibleTimeStart.Month,
+					1),
+				delegate(DateTime t) { return t.AddMonths(1); },
+				"MMMM");
+
+		//days
+		AddTickLevel(120, 60, 60.0f,
+				new TimeSpan(0,10,0,0),
+				new DateTime(visibleTimeStart.Year,
+					visibleTimeStart.Month,
+					visibleTimeStart.Day),
+				delegate(DateTime t) { return t.AddDays(1); },
+				"dd");
+
+		//hours
+		AddTickLevel(4.0f, 1.0f, 70.0f,
+				new TimeSpan(0, 0, 20, 0),
+				new DateTime(visibleTimeStart.Year,
+					visibleTimeStart.Month,
+					visibleTimeStart.Day,
+					visibleTimeStart.Hour,
+					0, 0),
+				delegate(DateTime t) { return t.AddHours(1); },
+				"HH:mm:ss");
+
+		//minutes
+		AddTickLevel(0.5f, 0.04f, 80.0f,
+				new TimeSpan(0, 0, 0, 20),
+				new DateTime(visibleTimeStart.Year,
+					visibleTimeStart.Month,
+					visibleTimeStart.Day,
+					visibleTimeStart.Hour,
+					visibleTimeStart.Minute, 0),
+				delegate(DateTime t) { return t.AddMinutes(1); },
+				":mm:ss");
+
+		//Seconds
+		AddTickLevel(0.0013f, 0.00069f, 90.0f,
+				new TimeSpan(0, 0, 0, 0, 20),
+				new DateTime(visibleTimeStart.Year,
+					visibleTimeStart.Month,
+					visibleTimeStart.Day,
+					visibleTimeStart.Hour,
+					visibleTimeStart.Minute,
+					visibleTimeStart.Second),
+				delegate(DateTime t) { return t.AddSeconds(1); },
+				":ss");
+
+
+
+
 		
 		// Nearest (usually) non-visible tick marks
 		DateTime visYear   = new DateTime(visibleTimeStart.Year, 1,1,0,0,0,DateTimeKind.Utc);
@@ -474,11 +519,11 @@ public class Timeline : MonoBehaviour {
 			float panAmount = (float)(mouseToTimeline*mousePanDelta);
 			if(visibleTimeEnd.AddDays(-panAmount) > totalTimeEnd){
 				float smallPan   = (float)((totalTimeEnd - visibleTimeEnd).TotalDays);
-				visibleTimeEnd   = totalTimeEnd.AddDays(smallPan);
+				visibleTimeEnd   = totalTimeEnd;
 				visibleTimeStart = visibleTimeStart.AddDays(smallPan);
 			}else if(visibleTimeStart.AddDays(-panAmount) < totalTimeStart){
 				float smallPan   = (float)((totalTimeStart - visibleTimeStart).TotalDays);
-				visibleTimeStart = totalTimeStart.AddDays(smallPan);
+				visibleTimeStart = totalTimeStart;
 				visibleTimeEnd   = visibleTimeEnd.AddDays(smallPan);
 			}else{
 				visibleTimeEnd   = visibleTimeEnd.AddDays(-panAmount);
@@ -506,46 +551,21 @@ public class Timeline : MonoBehaviour {
 	/// Usage:  Call every time the GUI is updated--in OnGUI()
 	/// </summary>
 	void DrawTickmarks(){
-		// TODO: optimize for performance, may require combining each visX list into a single list
 		float countToTimelineY = (timelineHeight-20.0f) / (Screen.width / (tickWidth*spacePerTick));
 		if(debugStrings)
 			Debug.Log("countToTimelineY: " + countToTimelineY);
 		
-		
 		double visToScreenX = Screen.width/visibleRange.TotalDays;
+		double ticksToScreenX = Screen.width / visibleRange.Ticks;
 		double tickOffset = tickWidth/2;
-		float yOffset = timelineY+(visYears.Count*countToTimelineY)+20.0f;
-		foreach(double i in visYears){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
-		}
-		yOffset = timelineY+(visMonths.Count*countToTimelineY)+20.0f;
-		foreach(double i in visMonths){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
-		}
-		yOffset = timelineY+(visDays.Count*countToTimelineY)+20.0f;
-		foreach(double i in visDays){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
-		}
-		yOffset = timelineY+(visHours.Count*countToTimelineY)+20.0f;
-		visToScreenX = Screen.width/visibleRange.TotalHours;
-		foreach(double i in visHours){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
-		}
-		yOffset = timelineY+(visMinutes.Count*countToTimelineY)+20.0f;
-		visToScreenX = Screen.width/visibleRange.TotalMinutes;
-		foreach(double i in visMinutes){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
-		}
-		yOffset = timelineY+(visSeconds.Count*countToTimelineY)+20.0f;
-		visToScreenX = Screen.width/visibleRange.TotalSeconds;
-		foreach(double i in visSeconds){
-			float myX = (float)((i*visToScreenX)-(tickOffset));
-			GUI.DrawTexture (new Rect (myX,yOffset, tickWidth, timelineHeight), tickMark);
+		float yOffset = timelineY+(visYears.Count*countToTimelineY) + 40.0f;
+
+		//Draw the various ticks
+		Color c = new Color(1, 1, 1, 1);
+		foreach(TickDescription t in ticks) {
+			float myX = (float)(((double)(t.time.Ticks - visibleTimeStart.Ticks) / visibleRange.Ticks) * Screen.width);
+			GUI.DrawTexture(new Rect(myX, t.yOffset, tickWidth, timelineHeight), tickMark);
+			GUI.Label(new Rect(myX - 32, t.yOffset - 20, 64, 20), t.description);
 		}
 	}
 	
