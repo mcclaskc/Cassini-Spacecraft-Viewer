@@ -74,8 +74,8 @@ public class Movement : MonoBehaviour {
 		target = Data[0].position;
 	}
 	
+	//Signal reciever
 	void Play(){
-		//This function is intended to be called by the timeline
 		if(play){
 			play = false;
 		}
@@ -84,11 +84,13 @@ public class Movement : MonoBehaviour {
 		}
 	}
 	
+	//Signal reciever
 	void Reverse(){
 		if(play && !reverse) play = false;
 		reverse = !reverse;
 	}
 	
+	//Signal reciever
 	void Reset(){
 		nextUpdate = 0.0f;
 		iterator = 0;
