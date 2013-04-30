@@ -48,6 +48,7 @@ public class PlayPauseButton : MonoBehaviour {
 		//----Reset portion----//
 		if(GUI.Button(resetBox, resetTexture)){
 			timeManager.SendMessage("Reset");
+			isReversing = isPlaying = false;
 		}
 		
 		//----Reverse portion----//
@@ -61,6 +62,7 @@ public class PlayPauseButton : MonoBehaviour {
 			if(GUI.Button(reverseBox, pauseTexture)){
 				timeManager.SendMessage("Reverse");
 				isReversing = !isReversing;
+				isPlaying = false;
 			}
 		}
 		
@@ -75,6 +77,7 @@ public class PlayPauseButton : MonoBehaviour {
 			if(GUI.Button(playBox, pauseTexture)){
 				timeManager.SendMessage("Play");
 				isPlaying = !isPlaying;
+				isReversing = false;
 			}
 		}
 	}

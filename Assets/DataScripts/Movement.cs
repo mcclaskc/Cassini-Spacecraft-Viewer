@@ -75,7 +75,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	//Signal reciever
-	void Play(DateTime updateTime){
+	void Play(){
 		if(play){
 			play = false;
 		}
@@ -96,5 +96,7 @@ public class Movement : MonoBehaviour {
 		iterator = 0;
 		target = Data[iterator].position;
 		transform.position = target;
+		play = reverse = false;
 	}
+	
 }

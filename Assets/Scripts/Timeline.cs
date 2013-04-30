@@ -599,6 +599,7 @@ public class Timeline : MonoBehaviour {
 	//Sets PlayHead current time
 	public void SetCurrentPlayhead(DateTime newTime){
 		playhead = newTime;
+		Debug.Log("Entered Time = " + newTime + "   Current Time =  " + playhead);
 	}
 	
 	public DateTime GetCurrentPlayhead(){
@@ -650,7 +651,9 @@ public class Timeline : MonoBehaviour {
 		
 		// Label is the area in which to display the hover tooltip
 		//    for any GUIContent that indicates a tooltip
-		GUI.Label(new Rect((Screen.width/2f)-75,
-			timelineY,100, 20),GUI.tooltip);
+		skin.label.alignment = TextAnchor.MiddleRight;
+		GUI.Label(new Rect((Screen.width/2f)-200,
+			timelineY,200, 20),GUI.tooltip);
+		skin.label.alignment = TextAnchor.MiddleCenter; 
 	}
 }
