@@ -75,7 +75,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	//Signal reciever
-	void Play(){
+	void Play(DateTime updateTime){
 		if(play){
 			play = false;
 		}

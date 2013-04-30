@@ -26,10 +26,9 @@ public class FileLoader : DataAccess {
 					for(int index = 0; index < 17; index++) {
 						utc += utcChar[index];
 					}
-					//double ephemTime = binReader.ReadDouble();
-					//Debug.Log (DateTime.Parse(utc));
+					//Uncommented following line, cause it breaks everything if it is not there
+					double ephemTime = binReader.ReadDouble();
 					times.Add(DateTime.Parse(utc));
-
 				} catch (Exception) {
 					finished = true;
 				}
@@ -282,13 +281,13 @@ public class FileLoader : DataAccess {
 				cassiniData.Add(times[i], new EphemerisData(posList[i], times[i]));
 			}
 			//Add the cassini data to the dictionary
-			bodies["Cassini_Temp"] = cassiniData;
+			bodies["Cassini"] = cassiniData;
 		}
 		
 		DateTime[] startEnd = new DateTime[2];
 		startEnd[0] = times[0];
 		startEnd[1] = times[times.Count - 1];
-		
+		Debug.Log ("CHECKME: " + times.Count);
 		//Let gameobject know they can now receive their data
 		foreach (GameObject mover in Movers){
 			mover.SendMessage ("Loaded", startEnd);

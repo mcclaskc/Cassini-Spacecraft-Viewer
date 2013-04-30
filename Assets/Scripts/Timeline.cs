@@ -22,7 +22,7 @@ public class Timeline : MonoBehaviour {
 	public GUISkin skin;
 
 	//Playhead position and texture
-	public DateTime playhead = new DateTime(2008, 10, 3, 10, 12, 34);
+	public DateTime playhead = new DateTime(2009, 6, 22);
 	public Texture2D playheadTop;
 	public Color playheadColor;
 	
@@ -594,6 +594,15 @@ public class Timeline : MonoBehaviour {
 			GUI.DrawTexture(new Rect(myX - 1, timelineY + 40.0f, 2.0f, timelineHeight), tickMark);
 			GUI.color = Color.white;
 		}
+	}
+	
+	//Sets PlayHead current time
+	public void SetCurrentPlayhead(DateTime newTime){
+		playhead = newTime;
+	}
+	
+	public DateTime GetCurrentPlayhead(){
+		return playhead;	
 	}
 	
 	

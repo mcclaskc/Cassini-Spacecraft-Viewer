@@ -26,6 +26,7 @@ public class DataReader : MonoBehaviour {
 			{
 				Debug.Log (Data[i].position + "  " + Data[i].time);
 			}
+			Debug.Log ("Data Size:" + Data.Count);
 		}
 	}
 }
