@@ -595,7 +595,7 @@ public class Timeline : MonoBehaviour {
 			GUI.color = Color.white;
 		}
 	}
-
+	
 	
 	/// <summary>
 	/// Function: OnGUI()
@@ -629,7 +629,7 @@ public class Timeline : MonoBehaviour {
 			// GUIContent indicates its area name with a
 			//    message that will set the global GUI.tooltip
 			new GUIContent("", mouseTimeLocation));
-
+		
 		//Draw the control bar
 		DrawControlBar();
 
@@ -641,7 +641,7 @@ public class Timeline : MonoBehaviour {
 		
 		// Label is the area in which to display the hover tooltip
 		//    for any GUIContent that indicates a tooltip
-		GUI.Label(new Rect((Screen.width - (totalTimeEnd.ToString().Length*5))/2,
-			timelineY,Screen.width, 20),GUI.tooltip);
+		GUI.Label(new Rect((Screen.width/2f)-75,
+			timelineY,100, 20),GUI.tooltip);
 	}
 }
