@@ -26,11 +26,11 @@ public class FileLoader : DataAccess {
 					for(int index = 0; index < 17; index++) {
 						utc += utcChar[index];
 					}
-					double ephemTime = binReader.ReadDouble();
+					//double ephemTime = binReader.ReadDouble();
 					//Debug.Log (DateTime.Parse(utc));
 					times.Add(DateTime.Parse(utc));
 
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -53,7 +53,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -81,7 +81,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -111,7 +111,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -141,7 +141,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -170,7 +170,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -199,7 +199,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -258,7 +258,7 @@ public class FileLoader : DataAccess {
 			BinaryReader binReader = new BinaryReader(File.Open (filename, FileMode.Open));
 			bool finished = false;
 			//These are placeholders, cassini file comes with velocity data as well as position
-			double velx, vely, velz;
+			//double velx, vely, velz;
 			//Loop that goes until file is loaded
 			while(!finished) {
 				try{
@@ -267,12 +267,12 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					//velocities
-					velx = binReader.ReadDouble();
-					velz = binReader.ReadDouble();
-					vely = binReader.ReadDouble();
+					binReader.ReadDouble();
+					binReader.ReadDouble();
+					binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float) y, (float)z));
 					
-				}catch(Exception e){
+				}catch(Exception){
 				  	finished = true;
 				}
 			}
@@ -312,7 +312,7 @@ public class FileLoader : DataAccess {
 					double z = binReader.ReadDouble();
 					double y = binReader.ReadDouble();
 					posList.Add(new Vector3((float) x, (float)y, (float)z));
-				} catch (Exception e) {
+				} catch (Exception) {
 					finished = true;
 				}
 			}
@@ -355,7 +355,6 @@ public class FileLoader : DataAccess {
 
 	public override List<EphemerisData> GetEphemeris(DateTime start, DateTime end, string bodyName) {
 		List<EphemerisData> accumulator = new List<EphemerisData>();
-		Debug.Log(bodies.ContainsKey(bodyName));
 		if(bodies.ContainsKey(bodyName)) {
 			SortedList<DateTime, EphemerisData> bodyData = bodies[bodyName];
 			//Go through and get the data
@@ -365,7 +364,6 @@ public class FileLoader : DataAccess {
 				}
 			}
 		}
-		Debug.Log (accumulator.Count);
 
 		return accumulator;
 	}

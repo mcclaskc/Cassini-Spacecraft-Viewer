@@ -75,7 +75,7 @@ public class NetworkAccess : DataAccess {
 					chunk = list._get(i);
 					Vector3 pos = list.getVector3(i);
 					DateTime time = DateTime.Parse(chunk.getString("timestamp"));
-					string body = chunk.getString("body");
+					//string body = chunk.getString("body");
 					EphemerisData eph = new EphemerisData(pos, time);
 					ephemlocal.Add(eph);
 				}

@@ -13,7 +13,7 @@ public class windowManagerScript : MonoBehaviour {
 	public GameObject currentViewer;
 	public GameObject cassiniViewer;
 	private Camera viewerCamera;
-	private VectorFollow viewerScript;
+	//private VectorFollow viewerScript;
 	
 	private bool pipIsNotMain = false;  //False if pip is NOT main screen
 	private float lastPipSwitch;		//Use to keep track of when the user last did something
@@ -21,14 +21,13 @@ public class windowManagerScript : MonoBehaviour {
 	//Initialize the PiP camera here
 	void Start () {
 		//Grab the viewerScript once since it should not change
-		viewerScript = currentViewer.GetComponent<VectorFollow>();
+		//viewerScript = currentViewer.GetComponent<VectorFollow>();
 		//Grab the viewer camera so we don't have to do it again
 		viewerCamera = currentViewer.GetComponent<Camera>();
 		//Make sure the camera is displaying to the screen
 		viewerCamera.enabled = true;
 		//Update it with the default selection
 		//currentViewer.SendMessage("SetTarget", planetList.selection);
-		Debug.Log(viewerCamera);
 	}
 	
 	// Update is called once per frame, use to update positions

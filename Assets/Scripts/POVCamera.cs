@@ -23,9 +23,6 @@ public class POVCamera : MonoBehaviour {
 	//Variables for camera angles
 	private float x = 0.0f;
 	private float y = 0.0f;
-	
-	//Variable for Camera control
-	private Camera main;
 
 	// Use this for initialization
 	void Start () {
@@ -38,9 +35,6 @@ public class POVCamera : MonoBehaviour {
 		var angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
-		
-		main = Camera.main;
-	
 	}
 	
 	// Update is called once per frame

@@ -30,7 +30,6 @@ public class Timeline : MonoBehaviour {
 	private DateTime visibleTimeStart;
 	private DateTime visibleTimeEnd;
 	private TimeSpan visibleRange;
-	private TimeSpan totalRange;
 
 	//Variables for the timeline selection
 	private DateTime potentialTimeStart;
@@ -69,7 +68,6 @@ public class Timeline : MonoBehaviour {
 	public int numberOfTickMarks = 4;
 	public int spacePerTick = 5;
 	public int tickWidth    = 5;
-	
 	
 	// Tick Mark Logic
 	private enum tickType {years,months,days,hours,minutes,seconds};
@@ -118,7 +116,6 @@ public class Timeline : MonoBehaviour {
 	public void setStart(DateTime start){
 		if(start < totalTimeEnd){
 			totalTimeStart = start;
-			totalRange     = totalTimeEnd-totalTimeStart;
 			visibleTimeStart = totalTimeStart;
 			visibleTimeEnd   = totalTimeEnd;
 			visibleRange     = visibleTimeEnd - visibleTimeStart;
@@ -137,7 +134,6 @@ public class Timeline : MonoBehaviour {
 	public void setEnd(DateTime end){
 		if(end > totalTimeStart){
 			totalTimeEnd = end;
-			totalRange   = totalTimeEnd-totalTimeStart;
 			visibleTimeStart = totalTimeStart;
 			visibleTimeEnd   = totalTimeEnd;
 			visibleRange     = visibleTimeEnd - visibleTimeStart;
@@ -157,7 +153,6 @@ public class Timeline : MonoBehaviour {
 		if(start < end){
 			totalTimeStart = start;
 			totalTimeEnd   = end;
-			totalRange     = totalTimeEnd-totalTimeStart;
 			visibleTimeStart = totalTimeStart;
 			visibleTimeEnd   = totalTimeEnd;
 			visibleRange     = visibleTimeEnd - visibleTimeStart;
@@ -181,7 +176,6 @@ public class Timeline : MonoBehaviour {
 		// Cassini Orbit Insertion Date 2004 July 1st 024800 UTC
 		totalTimeStart = new DateTime(2004,7,1,2,48,0, DateTimeKind.Utc);
 		totalTimeEnd = DateTime.UtcNow;
-		totalRange   = totalTimeEnd - totalTimeStart;
 		
 		// Visible time range describes what is visible on the timeline
 		visibleTimeStart = totalTimeStart;
@@ -480,13 +474,7 @@ public class Timeline : MonoBehaviour {
 		if(debugStrings)
 			Debug.Log("countToTimelineY: " + countToTimelineY);
 		
-		double visToScreenX = Screen.width/visibleRange.TotalDays;
-		double ticksToScreenX = Screen.width / visibleRange.Ticks;
-		double tickOffset = tickWidth/2;
-		float yOffset = timelineY+(visYears.Count*countToTimelineY) + 40.0f;
-
 		//Draw the various ticks
-		Color c = new Color(1, 1, 1, 1);
 		foreach(TickDescription t in ticks) {
 			float myX = (float)(((double)(t.time.Ticks - visibleTimeStart.Ticks) / visibleRange.Ticks) * Screen.width);
 			GUI.DrawTexture(new Rect(myX, t.yOffset, tickWidth, timelineHeight), tickMark);
@@ -581,7 +569,7 @@ public class Timeline : MonoBehaviour {
 						visibleTimeEnd = potentialTimeEnd;
 						FindVisibleTickmarks();
 					}
-				} catch(Exception e) {
+				} catch(Exception) {
 				}
 
 			GUILayout.EndHorizontal();
