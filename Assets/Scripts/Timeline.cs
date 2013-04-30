@@ -58,6 +58,8 @@ public class Timeline : MonoBehaviour {
 	private float timelineY = 0;
 	
 	//Panning Logic
+	private DateTime panStartTime;
+	private DateTime panEndTime;
 	private float mousePanStart = -1;
 	private float mousePanDelta = 0;
 	
@@ -317,7 +319,7 @@ public class Timeline : MonoBehaviour {
 				"HH:mm:ss");
 
 		//minutes
-		AddTickLevel(0.5f, 0.04f, 80.0f,
+		AddTickLevel(0.1f, 0.04f, 80.0f,
 				new TimeSpan(0, 0, 0, 20),
 				new DateTime(visibleTimeStart.Year,
 					visibleTimeStart.Month,
@@ -339,85 +341,6 @@ public class Timeline : MonoBehaviour {
 				delegate(DateTime t) { return t.AddSeconds(1); },
 				":ss");
 
-
-
-
-		
-		// Nearest (usually) non-visible tick marks
-		DateTime visYear   = new DateTime(visibleTimeStart.Year, 1,1,0,0,0,DateTimeKind.Utc);
-		DateTime visMonth  = new DateTime(visibleTimeStart.Year,
-			visibleTimeStart.Month,1,0,0,0,DateTimeKind.Utc);
-		DateTime visDay    = new DateTime(visibleTimeStart.Year,
-			visibleTimeStart.Month,visibleTimeStart.Day,0,0,0,DateTimeKind.Utc);
-		DateTime visHour   = new DateTime(visibleTimeStart.Year,
-			visibleTimeStart.Month,visibleTimeStart.Day,visibleTimeStart.Hour,0,0,DateTimeKind.Utc);
-		DateTime visMinute = new DateTime(visibleTimeStart.Year,
-			visibleTimeStart.Month,visibleTimeStart.Day,visibleTimeStart.Hour,
-			visibleTimeStart.Minute,0,0,DateTimeKind.Utc);
-		DateTime visSecond = new DateTime(visibleTimeStart.Year,
-			visibleTimeStart.Month,visibleTimeStart.Day,visibleTimeStart.Hour,
-			visibleTimeStart.Minute,visibleTimeStart.Second,0,DateTimeKind.Utc);
-		
-		// Cycle through all possible visible year multiples
-		double kMax = (visibleRange.TotalDays/365.25) + 1.0;
-		if(kMax < Screen.width/25){
-			for(int k = 1; k <= kMax; k++){
-				visYears.Add ((visYear.AddYears(k) - visibleTimeStart).TotalDays);
-			}
-		}else{
-			Debug.Log("Out of range, please decrease visible range on timeline");
-		}
-		
-		// Verify tick spacing sanity
-		// Should be a property drawer item for inspector
-		if(tickWidth < 0)
-			tickWidth = 1;
-		if(tickWidth > 20)
-			tickWidth = 20;
-		if(spacePerTick < 0)
-			spacePerTick = 1;
-		if(spacePerTick > 20)
-			spacePerTick = 20;
-		// Set tick spacing
-		int tickSpacing = tickWidth*spacePerTick;
-		// Cycle through all possible visible month multiples
-		kMax = (visibleRange.TotalDays/30.5) + 1.0;
-		if(kMax < Screen.width/tickSpacing){
-			visMonths.Clear();
-			for(int k = 1; k <= kMax; k++){
-				visMonths.Add ((visMonth.AddMonths(k) - visibleTimeStart).TotalDays);
-			}
-		}
-		
-		// Cycle through all possible available day ticks
-		kMax = visibleRange.TotalDays + 1.0;
-		if(kMax < Screen.width/tickSpacing){
-			visDays.Clear();
-			for(int k = 1; k <= kMax; k++){
-				visDays.Add ((visDay.AddDays(k) - visibleTimeStart).TotalDays);
-			}
-		}
-		// Cycle through all possible available hour ticks
-		kMax = visibleRange.TotalHours + 1.0;
-		if(kMax < Screen.width/tickSpacing){
-			for(int k = 1; k <= kMax; k++){
-				visHours.Add ((visHour.AddHours(k) - visibleTimeStart).TotalHours);
-			}
-		}
-		// Cycle through all possible available minute ticks
-		kMax = visibleRange.TotalMinutes + 1.0;
-		if(kMax < Screen.width/tickSpacing){
-			for(int k = 1; k <= kMax; k++){
-				visMinutes.Add ((visMinute.AddMinutes(k) - visibleTimeStart).TotalMinutes);
-			}
-		}
-		// Cycle through all possible available second ticks
-		kMax = visibleRange.TotalSeconds + 1.0;
-		if(kMax < Screen.width/tickSpacing){
-			for(int k = 1; k <= kMax; k++){
-				visSeconds.Add ((visSecond.AddSeconds(k) - visibleTimeStart).TotalSeconds);
-			}
-		}
 	}
 	
 	void Awake(){
@@ -458,13 +381,13 @@ public class Timeline : MonoBehaviour {
 			}
 			if(delta > 0){
 				if(visibleRange.TotalSeconds > 30){
-					visibleTimeStart = visibleTimeStart.AddDays ((visibleRange.TotalDays/10));
-					visibleTimeEnd = visibleTimeEnd.AddDays (-(visibleRange.TotalDays/10));
+					visibleTimeStart = visibleTimeStart.AddDays ((visibleRange.TotalDays/10.0f));
+					visibleTimeEnd = visibleTimeEnd.AddDays (-(visibleRange.TotalDays/10.0f));
 				}
 			}
 			else{
-				visibleTimeStart = visibleTimeStart.AddDays (-(visibleRange.TotalDays/10));
-				visibleTimeEnd = visibleTimeEnd.AddDays ((visibleRange.TotalDays/10));
+				visibleTimeStart = visibleTimeStart.AddDays (-(visibleRange.TotalDays/10.0f));
+				visibleTimeEnd = visibleTimeEnd.AddDays ((visibleRange.TotalDays/10.0f));
 				if(visibleTimeStart < totalTimeStart)
 					visibleTimeStart = totalTimeStart;
 				if(visibleTimeEnd > totalTimeEnd)
@@ -508,26 +431,28 @@ public class Timeline : MonoBehaviour {
 			if(debugStrings)
 				Debug.Log ("Click @ " + Input.mousePosition.x);
 			mousePanStart = Input.mousePosition.x;
+			panStartTime = visibleTimeStart;
+			panEndTime = visibleTimeEnd;
 		}
 		if(mousePanStart >= 0){
 			mousePanDelta = Input.mousePosition.x - mousePanStart;
 			// Resetting mousePanStart on each pass so that
 			//    changes are permenant at this level
-			mousePanStart = Input.mousePosition.x;
-			double mouseToTimeline = visibleRange.TotalDays/Screen.width;
+			//mousePanStart = Input.mousePosition.x;
+			double mouseToTimeline = visibleRange.TotalDays/(double)Screen.width;
 			// panAmount can be positive for negative, works with DateTime.Add()
 			float panAmount = (float)(mouseToTimeline*mousePanDelta);
-			if(visibleTimeEnd.AddDays(-panAmount) > totalTimeEnd){
-				float smallPan   = (float)((totalTimeEnd - visibleTimeEnd).TotalDays);
+			if(panEndTime.AddDays(-panAmount) > totalTimeEnd){
+				float smallPan   = (float)((totalTimeEnd - panEndTime).TotalDays);
 				visibleTimeEnd   = totalTimeEnd;
-				visibleTimeStart = visibleTimeStart.AddDays(smallPan);
-			}else if(visibleTimeStart.AddDays(-panAmount) < totalTimeStart){
-				float smallPan   = (float)((totalTimeStart - visibleTimeStart).TotalDays);
+				visibleTimeStart = panStartTime.AddDays(smallPan);
+			}else if(panStartTime.AddDays(-panAmount) < totalTimeStart){
+				float smallPan   = (float)((totalTimeStart - panStartTime).TotalDays);
 				visibleTimeStart = totalTimeStart;
-				visibleTimeEnd   = visibleTimeEnd.AddDays(smallPan);
+				visibleTimeEnd   = panEndTime.AddDays(smallPan);
 			}else{
-				visibleTimeEnd   = visibleTimeEnd.AddDays(-panAmount);
-				visibleTimeStart = visibleTimeStart.AddDays(-panAmount);
+				visibleTimeEnd   = panEndTime.AddDays(-panAmount);
+				visibleTimeStart = panStartTime.AddDays(-panAmount);
 			}
 			
 			// Update Tickmarks
@@ -636,10 +561,16 @@ public class Timeline : MonoBehaviour {
 				try {
 					potentialTimeStart = new DateTime(Convert.ToInt32(potentialStartYear), 
 																	Convert.ToInt32(potentialStartMonth), 
-																	Convert.ToInt32(potentialStartDay));
+																	Convert.ToInt32(potentialStartDay),
+																	visibleTimeStart.Hour,
+																	visibleTimeStart.Minute,
+																	visibleTimeStart.Second);
 					potentialTimeEnd = new DateTime(Convert.ToInt32(potentialEndYear), 
 																	Convert.ToInt32(potentialEndMonth), 
-																	Convert.ToInt32(potentialEndDay));
+																	Convert.ToInt32(potentialEndDay),
+																	visibleTimeEnd.Hour,
+																	visibleTimeEnd.Minute,
+																	visibleTimeEnd.Second);
 
 					//Make sure the new datetime makes sense
 					if(potentialTimeEnd.CompareTo(potentialTimeStart) > 0 &&
