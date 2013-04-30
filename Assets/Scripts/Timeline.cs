@@ -20,6 +20,11 @@ using System.Collections.Generic;
 public class Timeline : MonoBehaviour {
 
 	public GUISkin skin;
+
+	//Playhead position and texture
+	public DateTime playhead = new DateTime(2008, 10, 3, 10, 12, 34);
+	public Texture2D playheadTop;
+	public Color playheadColor;
 	
 	// Toggle variable for output strings
 	public bool debugStrings = false;
@@ -552,13 +557,15 @@ public class Timeline : MonoBehaviour {
 																	Convert.ToInt32(potentialStartDay),
 																	visibleTimeStart.Hour,
 																	visibleTimeStart.Minute,
-																	visibleTimeStart.Second);
+																	visibleTimeStart.Second,
+																	visibleTimeStart.Millisecond);
 					potentialTimeEnd = new DateTime(Convert.ToInt32(potentialEndYear), 
 																	Convert.ToInt32(potentialEndMonth), 
 																	Convert.ToInt32(potentialEndDay),
 																	visibleTimeEnd.Hour,
 																	visibleTimeEnd.Minute,
-																	visibleTimeEnd.Second);
+																	visibleTimeEnd.Second,
+																	visibleTimeEnd.Millisecond);
 
 					//Make sure the new datetime makes sense
 					if(potentialTimeEnd.CompareTo(potentialTimeStart) > 0 &&
@@ -574,6 +581,19 @@ public class Timeline : MonoBehaviour {
 
 			GUILayout.EndHorizontal();
 		GUILayout.EndArea();
+	}
+
+	//Draws the playhead, if visible
+	private void DrawPlayhead() {
+		if(playhead > visibleTimeStart &&
+				playhead < visibleTimeEnd) {
+			//Get the x position
+			float myX = (float)(((double)(playhead.Ticks - visibleTimeStart.Ticks) / visibleRange.Ticks) * Screen.width);
+			GUI.color = playheadColor;
+			GUI.DrawTexture(new Rect(myX - 5, timelineY + 30.0f, 10.0f, 10.0f), playheadTop);
+			GUI.DrawTexture(new Rect(myX - 1, timelineY + 40.0f, 2.0f, timelineHeight), tickMark);
+			GUI.color = Color.white;
+		}
 	}
 
 	
@@ -616,6 +636,8 @@ public class Timeline : MonoBehaviour {
 		DrawTickmarks();
 			
 		DrawEvents();
+
+		DrawPlayhead();
 		
 		// Label is the area in which to display the hover tooltip
 		//    for any GUIContent that indicates a tooltip
