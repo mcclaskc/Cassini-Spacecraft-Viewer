@@ -590,7 +590,7 @@ public class Timeline : MonoBehaviour {
 			//Get the x position
 			float myX = (float)(((double)(playhead.Ticks - visibleTimeStart.Ticks) / visibleRange.Ticks) * Screen.width);
 			GUI.color = playheadColor;
-			GUI.DrawTexture(new Rect(myX - 5, timelineY + 30.0f, 10.0f, 10.0f), playheadTop);
+			GUI.DrawTexture(new Rect(myX - 10, timelineY + 25.0f, 20.0f, 20.0f), playheadTop);
 			GUI.DrawTexture(new Rect(myX - 1, timelineY + 40.0f, 2.0f, timelineHeight), tickMark);
 			GUI.color = Color.white;
 		}
