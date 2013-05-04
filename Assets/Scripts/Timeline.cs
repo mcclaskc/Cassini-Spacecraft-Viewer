@@ -602,8 +602,19 @@ public class Timeline : MonoBehaviour {
 		Debug.Log("Entered Time = " + newTime + "   Current Time =  " + playhead);
 	}
 	
+	//Getter for the current playhead time
 	public DateTime GetCurrentPlayhead(){
 		return playhead;	
+	}
+	
+	/*  Getter for the current visible start and end range.
+	 *  Returns an array, with the start of the range in index 0 and end in index 1
+	 */
+	public DateTime[] GetVisibleRange(){
+		DateTime[] toReturn = new DateTime[2];
+		toReturn[0] = visibleTimeStart;
+		toReturn[1] = visibleTimeEnd;
+		return toReturn;
 	}
 	
 	

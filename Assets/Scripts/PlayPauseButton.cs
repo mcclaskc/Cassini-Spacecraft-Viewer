@@ -41,7 +41,12 @@ public class PlayPauseButton : MonoBehaviour {
 		playBox = new Rect((Screen.width/2f)+(width * 2.5f)+5,Screen.height - yPosition,width,height);
 	}
 	
-
+	//Signal reciever, use to make sure everything is stopped.  Should only be called by the TimeManager
+	void Stop(){
+		isPlaying = isReversing = false;	
+	}
+	
+	
 	void OnGUI(){
 		//Ensure all of the butttons are drawn on top of the scene
 		GUI.depth = -1;
