@@ -103,8 +103,9 @@ public class TimeManager : MonoBehaviour {
 				if(data == null || !testBlock.Equals(data)) {
 					//Get the current block
 					data = netAccess.GetEphemeris(currTime);
-					foreach(GameObject mover in mobileBodies)
-						mover.SendMessage("Loaded", data);
+					if(data != null)
+						foreach(GameObject mover in mobileBodies)
+							mover.GetComponent<Movement>().Loaded(data);
 				}
 
 				//Update the playhead

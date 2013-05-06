@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour {
 		*/
 	}
 	
-	void Loaded(NetworkAccess.EphemBlock block){
+	public void Loaded(NetworkAccess.EphemBlock block){
 		
 		//This function is intened to be called by the timeline to let this object know when it should
 		//load new data. 
