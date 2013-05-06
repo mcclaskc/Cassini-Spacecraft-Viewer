@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -92,7 +93,7 @@ $(document).ready(function(){initNavTree('class_object_label.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Properties</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,6 +110,9 @@ $(document).ready(function(){initNavTree('class_object_label.html','');});
 <div class="title">ObjectLabel Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class: <a class="el" href="class_object_label.html" title="Class: ObjectLabel Author: Jacob Rieger Last Modified: 11-Mar-2013 Purpose: This Script displays a GU...">ObjectLabel</a> Author: Jacob Rieger Last Modified: 11-Mar-2013 Purpose: This Script displays a GUIText element that follows your object. Usage: This script is part of the Planet Label prefab. This script expects a GUIText element to be present on the same GameObject that it is apart of. It will assume the object you wish to display a label over is the root parent. You can set the label name in the inspector, however if you leave it unset it will use the root parents name.  
+ <a href="class_object_label.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for ObjectLabel:</div>
 <div class="dyncontent">
@@ -120,6 +124,9 @@ Inheritance diagram for ObjectLabel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:adf05350985daa084dc3861232a628f83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf05350985daa084dc3861232a628f83"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>LabelName</b></td></tr>
+<tr class="separator:adf05350985daa084dc3861232a628f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dbbbf7cf40282cb034f670c0a08fb0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dbbbf7cf40282cb034f670c0a08fb0e"></a>
 Transform&#160;</td><td class="memItemRight" valign="bottom"><b>target</b></td></tr>
 <tr class="separator:a4dbbbf7cf40282cb034f670c0a08fb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,8 +150,9 @@ GUIText&#160;</td><td class="memItemRight" valign="bottom"><b>guitext</b></td></
 <tr class="separator:a4666cc9783a20f8b7ff9e06375e9d1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="_object_label_8cs_source.html#l00005">5</a> of file <a class="el" href="_object_label_8cs_source.html">ObjectLabel.cs</a>.</p>
+<div class="textblock"><p>Class: <a class="el" href="class_object_label.html" title="Class: ObjectLabel Author: Jacob Rieger Last Modified: 11-Mar-2013 Purpose: This Script displays a GU...">ObjectLabel</a> Author: Jacob Rieger Last Modified: 11-Mar-2013 Purpose: This Script displays a GUIText element that follows your object. Usage: This script is part of the Planet Label prefab. This script expects a GUIText element to be present on the same GameObject that it is apart of. It will assume the object you wish to display a label over is the root parent. You can set the label name in the inspector, however if you leave it unset it will use the root parents name. </p>
+
+<p>Definition at line <a class="el" href="_object_label_8cs_source.html#l00015">15</a> of file <a class="el" href="_object_label_8cs_source.html">ObjectLabel.cs</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>E:/Documents/GitHub/Cassini-Spacecraft-Viewer/Assets/Scripts/<a class="el" href="_object_label_8cs_source.html">ObjectLabel.cs</a></li>
 </ul>
@@ -154,7 +162,7 @@ GUIText&#160;</td><td class="memItemRight" valign="bottom"><b>guitext</b></td></
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_object_label.html">ObjectLabel</a></li>
-    <li class="footer">Generated on Mon Feb 11 2013 08:13:24 for Cassini Spacecraft Viewer by
+    <li class="footer">Generated on Mon May 6 2013 10:59:30 for Cassini Spacecraft Viewer by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

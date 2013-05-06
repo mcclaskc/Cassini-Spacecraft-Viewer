@@ -1,15 +1,14 @@
 var NAVTREE =
 [
   [ "Cassini Spacecraft Viewer", "index.html", [
+    [ "Cassini-Spacecraft-Viewer", "md__r_e_a_d_m_e.html", null ],
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ]
       ] ]
     ] ],
     [ "Files", null, [
@@ -20,10 +19,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_chat_input_8cs_source.html",
-"class_titan_viewer.html",
-"class_u_i_filled_sprite.html#a59f479f74976d599a2d16ca0864d1634ae0dfa985a2ef37ae7d082e900b6238e3",
-"class_u_i_widget_inspector.html#a06846897c333c4eaf1e5852475894e77"
+"_data_access_8cs_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
