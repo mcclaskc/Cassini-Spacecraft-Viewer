@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour {
 	private bool play = false;       //whether or not to keep updating the target
 	private bool reverse = false;	 //whether or not we are going in reverse
 	private int iterator; 			 //iterator for counting the updates
-	List<EphemerisData> Data; 		 //Compiled list of targets
+	List<EphemerisData> Data = null; 		 //Compiled list of targets
 	
 	void Start () {
 		//Initialize the iterator
@@ -31,6 +31,7 @@ public class Movement : MonoBehaviour {
 	
 	void Update () {
 		
+		/*
 		//Smooth movement when playing quickly, choppy if slow
 		transform.position = target;
 		
@@ -51,27 +52,31 @@ public class Movement : MonoBehaviour {
 				target = Data[iterator].position;
 			}
 		}
+		*/
 	}
 	
-	void Loaded(DateTime[] StartEnd){
+	void Loaded(NetworkAccess.EphemBlock block){
 		
 		//This function is intened to be called by the timeline to let this object know when it should
-		//load new data. With the provided start and end, it will call the fileloader's GetEphemeris to
-		//receive it's new data.
-		DateTime Start = StartEnd[0];
-		DateTime End = StartEnd[1];
-		iterator = 0;
-		
-		Debug.Log ("Received " + Start + " as Start Date");
-		Debug.Log ("Received " + End + " as End Date");
-		
-		//Fileloader returns a nice list of our data
-		Data = fileloader.GetEphemeris(Start, End, transform.name);
-		
-		//Sets you to the first position of the aquired data
-		//Target set to yourself as well
-		transform.position = Data[0].position;
-		target = Data[0].position;
+		//load new data. 
+		Data = block.getData(transform.name);
+	}
+	
+	void UpdatePlayhead(DateTime time) {
+		//Get the closest time from the block of data
+		if(Data != null) {
+			Vector3 pos = Vector3.zero;
+			long closest = long.MaxValue;
+			foreach(EphemerisData d in Data) {
+				long tickTime = Math.Abs((d.time - time).Ticks);
+				if(tickTime < closest) {
+					closest = tickTime;
+					pos = d.position;
+				}
+			}
+
+			transform.position = pos;
+		}
 	}
 	
 	//Signal reciever
@@ -94,7 +99,7 @@ public class Movement : MonoBehaviour {
 	void Reset(){
 		nextUpdate = 0.0f;
 		iterator = 0;
-		target = Data[iterator].position;
+		//target = Data[iterator].position;
 		transform.position = target;
 		play = reverse = false;
 	}

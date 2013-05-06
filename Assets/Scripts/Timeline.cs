@@ -199,11 +199,13 @@ public class Timeline : MonoBehaviour {
 		
 
 		// User Selection, uses  TimeEvent
+		/*
 		selection.setStart(new DateTime(2008,6,1,0,1,0, DateTimeKind.Utc));
 		selection.setEnd(new DateTime(2008,7,1,0,1,0, DateTimeKind.Utc));
 		selection.setLabel("Selection");
 		selection.setColor(new Color(1.0f,1.0f,0.6f,0.5f));
 		addEvent(selection);
+		*/
 		
 		// Temp Event 
 		addEvent (new TimeEvent(new DateTime(2009,1,1,0,0,0, DateTimeKind.Utc),
@@ -378,15 +380,18 @@ public class Timeline : MonoBehaviour {
 				Debug.Log ("delta: " + delta);
 				Debug.Log("mouseY: " + Input.mousePosition.y + ", timelineY: " + timelineY);
 			}
+			float absDelta = Mathf.Abs(delta);
 			if(delta > 0){
 				if(visibleRange.TotalSeconds > 30){
-					visibleTimeStart = visibleTimeStart.AddDays ((visibleRange.TotalDays/10.0f));
-					visibleTimeEnd = visibleTimeEnd.AddDays (-(visibleRange.TotalDays/10.0f));
+					visibleTimeStart = visibleTimeStart.AddDays ((visibleRange.TotalDays * absDelta/20.0f));
+					visibleTimeEnd = visibleTimeEnd.AddDays (-(visibleRange.TotalDays * absDelta/20.0f));
+					if((visibleTimeEnd - visibleTimeStart).TotalSeconds < 30)
+						visibleTimeEnd = visibleTimeStart.AddSeconds(30);
 				}
 			}
 			else{
-				visibleTimeStart = visibleTimeStart.AddDays (-(visibleRange.TotalDays/10.0f));
-				visibleTimeEnd = visibleTimeEnd.AddDays ((visibleRange.TotalDays/10.0f));
+				visibleTimeStart = visibleTimeStart.AddDays (-(visibleRange.TotalDays * absDelta/20.0f));
+				visibleTimeEnd = visibleTimeEnd.AddDays ((visibleRange.TotalDays * absDelta/20.0f));
 				if(visibleTimeStart < totalTimeStart)
 					visibleTimeStart = totalTimeStart;
 				if(visibleTimeEnd > totalTimeEnd)
@@ -396,6 +401,7 @@ public class Timeline : MonoBehaviour {
 		}
 		
 		// Adjust selection
+		/*
 		if(Input.GetMouseButtonDown(0) && Input.mousePosition.y < (Screen.height-timelineY)){			
 			double mouseTime = visibleRange.TotalDays/Screen.width;
 			mouseTime = mouseTime*Input.mousePosition.x;
@@ -424,6 +430,7 @@ public class Timeline : MonoBehaviour {
 				selection.setStart(endSelection);
 			}
 		}
+		*/
 		
 		// Adjust Panning
 		if(Input.GetMouseButtonDown(1) && Input.mousePosition.y < (Screen.height-timelineY)){
@@ -599,7 +606,7 @@ public class Timeline : MonoBehaviour {
 	//Sets PlayHead current time
 	public void SetCurrentPlayhead(DateTime newTime){
 		playhead = newTime;
-		Debug.Log("Entered Time = " + newTime + "   Current Time =  " + playhead);
+		//Debug.Log("Entered Time = " + newTime + "   Current Time =  " + playhead);
 	}
 	
 	//Getter for the current playhead time

@@ -5,10 +5,12 @@ using System;
 using System.IO;
 
 public class TimeManager : MonoBehaviour {
+
+	public NetworkAccess netAccess;
 	
 	public float currTimeStep;				//Current time step with any modifiers (i.e. pause)
 	public float defaultTimeStep;			//Default base time step before any modifiers are added
-	private float updateRate = .1f; 		//updateRate in seconds, how often the target changes
+	private float updateRate = .05f; 		//updateRate in seconds, how often the target changes
 	private float nextUpdate = 0.0f; 		//placeholder that tracks how much time passes
 	private float nextUIUpdate = 0.0f;  	//Use to make sure that user input is only accepted once
 	
@@ -21,11 +23,14 @@ public class TimeManager : MonoBehaviour {
 	
 	private DateTime[] visibleTime;			//The current visible range, null until user moves playhead
 	private float timelineHeight;			//The height of the timeline.  Grabbed at start, never again
+	private float lastChange; //Time of the last playhead move
 	
 	private bool isPlaying;					//True if the scene is playing, should not be true if isReversing is true
 	private bool isReversing;				//True if the scene is reversing, should not be true if isPlaying is true
 	
 	private GameObject[] mobileBodies;		//Array of all bodies in the scene with "Mobile" tag
+
+	private NetworkAccess.EphemBlock data = null;
 
 	// Use this for initialization
 	void Start () {
@@ -38,16 +43,17 @@ public class TimeManager : MonoBehaviour {
 		resetToTime = currTime = timeline.GetCurrentPlayhead();
 		mobileBodies = GameObject.FindGameObjectsWithTag("Mobile");
 		Debug.Log("TimeManager: Start Time = " + currTime);
+		lastChange = Time.time;
 	}
 	
 	//Currently using FixedUpdate for UIInput as it lowers number of calls 
 	//and should work on the vast majority of machines
-	void FixedUpdate(){
+	void Update(){
 		//Detect user input, but make sure it's only once per click
 		if(nextUIUpdate < Time.time){
 			//NOTE: This uses the input axis setup, NOT the hardcoded buttons
 			//This means it can easily be changed in the Edit>Project Settings>Axis menu
-			if((Input.GetAxis("PlayheadMove")>.99f) && (Input.mousePosition.y < (timelineHeight*.8))){
+			if((Input.GetAxisRaw("PlayheadMove")>.99f) && (Input.mousePosition.y < (timelineHeight*.8))){
 		  		//Grab the current state of the Timeline, note that the getter returns a datetime array
 				visibleTime = timeline.GetVisibleRange();
 				//Figure out the current time range
@@ -57,8 +63,6 @@ public class TimeManager : MonoBehaviour {
 				currTime = resetToTime = visibleTime[0].AddDays(mouseTime);
 				//Update the playhead
 				timeline.SetCurrentPlayhead(currTime);
-				//Update the data
-				updateData(currTime);
 				
 				//Stop playing to avoid potential update issues
 				isPlaying = isReversing = false;
@@ -68,19 +72,24 @@ public class TimeManager : MonoBehaviour {
 				}
 				windowManager.SendMessage("Stop");
 				nextUIUpdate = Time.time + updateRate;
-				Debug.Log("PlayheadMove: " + currTime);
+				//Debug.Log("PlayheadMove: " + currTime);
+				lastChange = Time.time;
+
+				foreach (GameObject mover in mobileBodies){
+					mover.SendMessage ("UpdatePlayhead", currTime);
+				}
 			}
 		}
-	}
 	
-	void Update(){
 		//Make sure we aren't playing too quickly
 		if(Time.time > nextUpdate){
 			if(isPlaying || isReversing){
 				//If scene is playing, step forward in time by 1 minute
 				if(isPlaying){
+					//Make sure we actually have data loaded
+
 					currTime = currTime.AddMinutes(1);
-					Debug.Log("In Play: " + currTime);
+					//Debug.Log("In Play: " + currTime);
 				}
 				//If scene is playing step backward in time by 1 minute
 				else if(isReversing){
@@ -88,16 +97,35 @@ public class TimeManager : MonoBehaviour {
 						currTime = currTime.AddMinutes(-1);	
 				}
 				nextUpdate = Time.time + updateRate;
+
+				//See if we need to update our data block
+				NetworkAccess.EphemBlock testBlock = new NetworkAccess.EphemBlock(new DateTime(currTime.Year, currTime.Month, currTime.Day));
+				if(data == null || !testBlock.Equals(data)) {
+					//Get the current block
+					data = netAccess.GetEphemeris(currTime);
+					foreach(GameObject mover in mobileBodies)
+						mover.SendMessage("Loaded", data);
+				}
+
 				//Update the playhead
 				timeline.SetCurrentPlayhead(currTime);
+
+				foreach (GameObject mover in mobileBodies){
+					mover.SendMessage ("UpdatePlayhead", currTime);
+				}
 			}	
+		}
+
+		//Request data if the playhead hasn't moved for a while
+		if(Time.time - lastChange > 1.0f) {
+			updateData(currTime);
 		}
 	}
 	
 	//Placeholder function, end function should send out a request to update
 	//all data to the new range
 	void updateData(DateTime newCurrentTime){
-		//Stuff to call goes here	
+		netAccess.RequestEphemeris(newCurrentTime, newCurrentTime.AddDays(1));
 	}
 	
 	//Signal reciever for the play button
@@ -108,6 +136,8 @@ public class TimeManager : MonoBehaviour {
 		isPlaying = !isPlaying;
 		//Make sure we can't play and reverse at the same time
 		isReversing = false;
+		//Also get the data, if we haven't already
+		updateData(currTime);
 	}
 	//Signal reciever for the reverse button
 	void Reverse(){
@@ -128,7 +158,4 @@ public class TimeManager : MonoBehaviour {
 		currTime = resetToTime;
 		timeline.SetCurrentPlayhead(currTime);
 	}
-	
-	
-	
 }
