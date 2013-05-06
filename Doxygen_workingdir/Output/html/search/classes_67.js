@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gimble',['Gimble',['../class_gimble.html',1,'']]]
+  ['gimbal',['Gimbal',['../class_gimbal.html',1,'']]]
 ];

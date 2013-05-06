@@ -1,25 +1,8 @@
 var searchData=
 [
-  ['scale',['scale',['../class_u_i_draggable_camera.html#a4a73ef4f8b604575f03aca4f24fed2b3',1,'UIDraggableCamera.scale()'],['../class_u_i_draggable_panel.html#ad34466fb48ff1392b3ca9282c22080b8',1,'UIDraggablePanel.scale()'],['../class_u_i_drag_object.html#a7565a3ba5979cd0bdcf1472aefeef1bc',1,'UIDragObject.scale()']]],
-  ['scroll',['Scroll',['../class_u_i_draggable_camera.html#a3518faa34a2f8fa719c63ad8c977673a',1,'UIDraggableCamera.Scroll()'],['../class_u_i_draggable_panel.html#ad28208e5e4eb6c7a9c826177b865c3b2',1,'UIDraggablePanel.Scroll()']]],
-  ['scrollvalue',['scrollValue',['../class_u_i_scroll_bar.html#a0228bdd9e5670c98d6df5a798b297c45',1,'UIScrollBar']]],
-  ['scrollwheelfactor',['scrollWheelFactor',['../class_u_i_draggable_camera.html#a4926155455c09344307270395123f77f',1,'UIDraggableCamera.scrollWheelFactor()'],['../class_u_i_draggable_panel.html#afa6e57fe90e689e7b94852052eb0babc',1,'UIDraggablePanel.scrollWheelFactor()'],['../class_u_i_drag_object.html#ae362a3a97db8201e53fae9618490299a',1,'UIDragObject.scrollWheelFactor()']]],
-  ['selection',['selection',['../class_u_i_popup_list.html#a69e68ab284ce3f3c581a9e11256e99c6',1,'UIPopupList']]],
   ['sensordataavailability',['SensorDataAvailability',['../class_sensor_data_availability.html',1,'']]],
-  ['setcoloronselection',['SetColorOnSelection',['../class_set_color_on_selection.html',1,'']]],
-  ['setdragamount',['SetDragAmount',['../class_u_i_draggable_panel.html#a3fd987cc7422c8df3f6f21f789d8fd9d',1,'UIDraggablePanel']]],
-  ['shaderquality',['ShaderQuality',['../class_shader_quality.html',1,'']]],
-  ['shouldmovehorizontally',['shouldMoveHorizontally',['../class_u_i_draggable_panel.html#ae096212b511ec7d7ccf867a888c157ed',1,'UIDraggablePanel']]],
-  ['shouldmovevertically',['shouldMoveVertically',['../class_u_i_draggable_panel.html#a56c6e8bc664a569734b77bb1b73cfb7d',1,'UIDraggablePanel']]],
-  ['showscrollbars',['showScrollBars',['../class_u_i_draggable_panel.html#a41b454b3be312c736e2102f099d74150',1,'UIDraggablePanel']]],
-  ['showtext',['ShowText',['../class_u_i_tooltip.html#ab58068f4f75c2680139d42e74ae3a8cf',1,'UITooltip']]],
-  ['slidervalue',['sliderValue',['../class_u_i_slider.html#a4e955b5458b31aebb1fc43ffca040603',1,'UISlider']]],
-  ['sortbyname',['SortByName',['../class_u_i_table.html#a3586fbec447a2a13fd5516a18002654e',1,'UITable']]],
-  ['spin',['Spin',['../class_spin.html',1,'']]],
-  ['spinwithmouse',['SpinWithMouse',['../class_spin_with_mouse.html',1,'']]],
-  ['springpanel',['SpringPanel',['../class_spring_panel.html',1,'']]],
-  ['spritefield',['SpriteField',['../class_u_i_sprite_inspector.html#ae410845e701fb8e8fcce7c88171d7511',1,'UISpriteInspector.SpriteField(UIAtlas atlas, string field, string name, params GUILayoutOption[] options)'],['../class_u_i_sprite_inspector.html#acb0e0afa2670b70321b19a91f12bc219',1,'UISpriteInspector.SpriteField(UIAtlas atlas, string name, params GUILayoutOption[] options)']]],
-  ['startinglanguage',['startingLanguage',['../class_localization.html#a504dccac2f5046f2661d49fd6e50558c',1,'Localization']]],
-  ['steepercurves',['steeperCurves',['../class_u_i_tweener.html#a67538bc1bb9f9de1256d378927622fad',1,'UITweener']]],
-  ['style',['style',['../class_u_i_tweener.html#a8e99adea86bc7dbed894862c61b16472',1,'UITweener']]]
+  ['setend',['setEnd',['../class_timeline.html#af9421713285ad9d5bea05151e712ac49',1,'Timeline']]],
+  ['setstart',['setStart',['../class_timeline.html#af0ba4d734c37f446bbfd1774b7035446',1,'Timeline']]],
+  ['settimeline',['setTimeline',['../class_timeline.html#a2c60eb97bccdbe0ef0f96a44a3f3d8c1',1,'Timeline']]],
+  ['sidebar',['Sidebar',['../class_sidebar.html',1,'']]]
 ];

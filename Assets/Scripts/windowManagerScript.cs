@@ -8,26 +8,21 @@ using System.Collections;
 
 public class windowManagerScript : MonoBehaviour {
 	
-//	public UIPopupList planetList;
-//	public UIPopupList sensorList;
+
 	public GameObject currentViewer;
 	public GameObject cassiniViewer;
 	private Camera viewerCamera;
-	//private VectorFollow viewerScript;
 	
 	private bool pipIsNotMain = false;  //False if pip is NOT main screen
 	private float lastPipSwitch;		//Use to keep track of when the user last did something
 	
 	//Initialize the PiP camera here
 	void Start () {
-		//Grab the viewerScript once since it should not change
-		//viewerScript = currentViewer.GetComponent<VectorFollow>();
-		//Grab the viewer camera so we don't have to do it again
+		//Grab the viewer camera once since it should not change
 		viewerCamera = currentViewer.GetComponent<Camera>();
 		//Make sure the camera is displaying to the screen
 		viewerCamera.enabled = true;
-		//Update it with the default selection
-		//currentViewer.SendMessage("SetTarget", planetList.selection);
+
 	}
 	
 	// Update is called once per frame, use to update positions
@@ -97,19 +92,13 @@ public class windowManagerScript : MonoBehaviour {
 	//This function will be called when a different planet is selected through the drop-down by the user
 	void OnPlanetSelectionChange(){
 		if(!pipIsNotMain){
-			//Change the current object being viewed to whatever the user selected
-			//currentViewer.SendMessage("SetTarget", planetList.selection);
 			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, .7f * Screen.height, .3f * Screen.width, .3f * Screen.height);
 			viewerCamera.depth = 1;
-			//Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
 		} else {
-			//Change the current object being viewed to whatever the user selected
-			//currentViewer.SendMessage("SetTarget", planetList.selection);
 			//Sanity check to make sure camera is where it should be
 			viewerCamera.pixelRect = new Rect(0f, 0f, Screen.width, Screen.height);
 			viewerCamera.depth = -1;
-			//Debug.Log("Selection: " + planetList.selection + "Viewer" + " Actual: " + viewerCamera);
 		}
 	}
 	
